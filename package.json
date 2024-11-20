@@ -26,6 +26,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.6",
+		"auto-text-size": "^0.2.2",
 		"colorthief": "^2.6.0"
 	}
 }

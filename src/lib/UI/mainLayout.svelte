@@ -1,107 +1,183 @@
 <script>
-	import ColorThief from 'colorthief';
+  import { onMount } from 'svelte';
+  import ColorThief from 'colorthief';
+  import { mostUsedColor, leastUsedColor } from '../../stores/colors.svelte.js';
 
-	const props = $props();
-	let backgroundColor = $state('#ffffff');
+  let logos = $state(null);
 
-	function updateBackgroundColor() {
-		if (typeof window !== 'undefined') {
-			const img = new Image();
-			img.crossOrigin = 'Anonymous';
-			img.src = props.imgSrc;
-			img.onload = () => {
-				const colorThief = new ColorThief();
-				const palette = colorThief.getPalette(img, 5);
-				const mostUsedColor = palette[0];
-				const leastUsedColor = palette[palette.length - 1];
-				backgroundColor = `rgb(${mostUsedColor[0]}, ${mostUsedColor[1]}, ${mostUsedColor[2]}) radial-gradient(circle at bottom left, rgba(${leastUsedColor[0]}, ${leastUsedColor[1]}, ${leastUsedColor[2]},0.4), rgb(${mostUsedColor[0]}, ${mostUsedColor[1]}, ${mostUsedColor[2]}) 40%)`;
-			};
-			img.onerror = (e) => {
-				console.log(e);
-			};
-		}
-	}
+  async function fetchData() {
+    const response = await fetch('/logos.json');
+    logos = await response.json();
+  }
 
-	$effect(() => updateBackgroundColor());
+  onMount(() => {
+    fetchData();
+  });
+
+  const props = $props();
+  let backgroundColor = $state('#ffffff');
+
+  function updateBackgroundColor() {
+    if (typeof window !== 'undefined') {
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.src = props.imgSrc;
+      img.onload = () => {
+        const colorThief = new ColorThief();
+        const palette = colorThief.getPalette(img, 5);
+        mostUsedColor.set(palette[0]);
+        leastUsedColor.set(palette[palette.length - 1]);
+        backgroundColor = `rgb(${palette[0][0]}, ${palette[0][1]}, ${palette[0][2]}) radial-gradient(327.27% 131.21% at 0% 100%, rgba(${palette[palette.length - 1][0]}, ${palette[palette.length - 1][1]}, ${palette[palette.length - 1][2]},0.4) 0%, rgb(${palette[0][0]}, ${palette[0][1]}, ${palette[0][2]}) 53.36%);
+        `;
+      };
+      img.onerror = (e) => {
+        console.log(e);
+      };
+    }
+  }
+
+  $effect(() => updateBackgroundColor());
 </script>
 
-<style>
-    .container {
-        display: flex;
-        flex-direction: row;
-        height: 100vh;
-        width: 100vw;
-        background: var(--background-color);
-    }
-
-    .split {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        position: relative;
-    }
-
-    .left {
-        padding: 1rem;
-        flex: 5;
-        position: relative;
-    }
-
-    .left img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 1rem;
-    }
-
-    .onImage {
-        position: absolute;
-        width: 90%;
-        top: 0;
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin: 1rem 0;
-    }
-
-    .logo {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .onImage .content {
-        margin-top: 5rem;
-    }
-
-    .right {
-        flex: 6;
-    }
-</style>
-
 <div class="container" style="background: {backgroundColor}">
-	<section class="split left">
-		<div class="onImage">
-			<header>
-				<h1>Eagles Eye '24</h1>
-				<div class="logo">
-					<img src="https://img.icons8.com/color/50/apple-settings.png">
-					<img src="https://img.icons8.com/color/50/apple-settings.png">
-				</div>
-			</header>
-			<div class="content">
-				{@render props.aboveImage()}
-			</div>
-		</div>
-		<img src={props.imgSrc} alt={props.alt} draggable="false" />
-	</section>
+ <section class="split left">
+  <div class="onImage" style="background-image: url({props.imgSrc});">
+   <header>
 
-	<section class="split right">
-		{@render props.right()}
-	</section>
+    <div class="eventLogo">
+     <h1>Eagles Eye '24 |</h1>
+     <span class="collaboration">
+      <h2>collaboration with<br /> <span>Sri Lanka Air Force</span></h2>
+      <img src={`data:image/png;base64, ${logos?.airForce}`} alt="air force logo" draggable="false" />
+     </span>
+    </div>
+
+    <img class="icacLogo" src={`data:image/png;base64, ${logos?.icac}`} alt="ICAC logo" draggable="false" />
+
+   </header>
+   <div class="content">
+    {@render props.aboveImage()}
+   </div>
+  </div>
+ </section>
+
+ <section class="split right">
+  {@render props.right()}
+ </section>
 </div>
+
+<style>
+.container {
+    display: flex;
+    flex-direction: row;
+		align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background: var(--background-color);
+}
+.split {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+.left {
+    flex: 5;
+    position: relative;
+    height: 100%;
+		width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.onImage {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 97%;
+    height: 97%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 1rem;
+		padding: 1rem;
+		margin: 5rem;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.eventLogo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+}
+.eventLogo h1 {
+    text-shadow: 0 0 50px #000;
+    font-family: Lexend, sans-serif;
+    font-size: 1.6vw;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.collaboration {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+.collaboration h2 {
+    color: white;
+    font-family: Comfortaa, sans-serif;
+    font-size: 0.45vw;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 200%;
+    text-transform: capitalize;
+}
+.collaboration h2 span {
+    font-size: 0.65vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px;
+}
+.collaboration img {
+    width: auto;
+    height: 2.3vw;
+    margin-left: 0.3rem;
+    flex-shrink: 0;
+}
+.icacLogo {
+    max-width: 5.8vw !important;
+    height: auto !important;
+    object-fit: contain;
+}
+.content {
+    margin-top: 5rem;
+}
+.right {
+    flex: 6;
+    height: 100%;
+}
+
+/*@media (max-width: 1300px), (max-height: 500px) {*/
+/*  .container {*/
+/*    flex-direction: column;*/
+/*    !*align-content: space-evenly;*!*/
+/*    !*height: 100%;*!*/
+/*    min-height: 110vh !important;*/
+/*  }*/
+/*		.left{*/
+/*				flex: 3 !important;*/
+/*				height: 100% !important;*/
+/*		}*/
+/*		.right{*/
+/*				flex: 2 !important;*/
+/*		}*/
+/*}*/
+</style>
