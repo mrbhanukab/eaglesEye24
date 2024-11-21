@@ -166,19 +166,35 @@ header {
     height: 100%;
 }
 
-/*@media (max-width: 1300px), (max-height: 500px) {*/
-/*  .container {*/
-/*    flex-direction: column;*/
-/*    !*align-content: space-evenly;*!*/
-/*    !*height: 100%;*!*/
-/*    min-height: 110vh !important;*/
-/*  }*/
-/*		.left{*/
-/*				flex: 3 !important;*/
-/*				height: 100% !important;*/
-/*		}*/
-/*		.right{*/
-/*				flex: 2 !important;*/
-/*		}*/
-/*}*/
+@media (max-width: 450px), (max-height: 350px) {
+
+ .eventLogo h1 {
+  font-size: 4vw;
+ }
+
+ .collaboration h2 {
+  font-size: 1vw;
+ }
+ .collaboration h2 span {
+  font-size: 1.8vw;
+ }
+ .collaboration img {
+  width: 5vw;
+  height: auto !important;
+ }
+ .icacLogo {
+  max-width: 12vw !important;
+ }
+
+ .container {
+    flex-direction: column;
+    min-height: 100vh !important;
+  }
+		.left{
+				flex: 3 !important;
+		}
+		.right{
+				flex: 2 !important;
+		}
+}
 </style>

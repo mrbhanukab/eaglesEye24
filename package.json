@@ -21,12 +21,11 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^5.0.0",
-		"svelte-adapter-azure-swa": "^0.20.1",
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-static": "^3.0.6",
 		"@sveltejs/adapter-vercel": "^5.4.7",
+		"appwrite": "^14.0.1",
 		"auto-text-size": "^0.2.2",
 		"colorthief": "^2.6.0"
 	}

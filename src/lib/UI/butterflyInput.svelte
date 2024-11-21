@@ -10,7 +10,7 @@
 
   const unsubscribeBackground = leastUsedColor.subscribe(value => {
     if (value) {
-      backgroundColor = `rgb(${value[0]}, ${value[1]}, ${value[2]}, 0.9)`;
+      backgroundColor = `rgb(${value[0]}, ${value[1]}, ${value[2]}, 0.7)`;
       document.documentElement.style.setProperty('--input-background-color', backgroundColor);
     }
   });
@@ -42,15 +42,30 @@ onMount(() => {
     color: #000000;
     border-radius: 0.5rem;
   }
-	label{
+    input:focus {
+        outline: none;
+    }
+
+    label{
 			color: white;
       font-family: Comfortaa, sans-serif;
 			font-size: 1vw;
       line-height: 170%;
 	}
+
+    @media (max-width: 450px), (max-height: 350px) {
+        input {
+            font-size: 3vw;
+            padding: 1vw;
+        }
+
+        label{
+            font-size: 2vw;
+        }
+    }
 </style>
 
 <div class="inputItem">
-	<label for={inputElement?.id}>{props.label}</label>
+	<label for={inputElement?.id}>{props.name}</label>
 	<input bind:this={inputElement} {...props}/>
 </div>

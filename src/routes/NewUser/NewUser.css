@@ -1,0 +1,62 @@
+.newUserPageRight {
+    display: flex;
+    width: 90%;
+    height: 80%;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.newUserPageRight span {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1vw;
+}
+
+.newUserPageAboveImage {
+    color: white;
+    text-shadow: 0 0 1rem black;
+    font-family: Comfortaa, sans-serif;
+    text-transform: capitalize;
+    line-height: 0;
+    margin-bottom: 1vh;
+}
+
+.newUserPageAboveImage h1 {
+    font-size: 2.5vw;
+    font-weight: 600;
+}
+
+.newUserPageAboveImage h4 {
+    font-size: 1.1vw;
+    font-weight: 300;
+}
+
+.newUserPageAboveImage p {
+    width: 70%;
+    font-size: 1vw;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+@media (max-width: 450px), (max-height: 350px) {
+    .newUserPageRight {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .newUserPageAboveImage {
+        margin-bottom: 0vh;
+    }
+
+    .newUserPageAboveImage h1 {
+        font-size: 5vw;
+    }
+
+    .newUserPageAboveImage h4 {
+        font-size: 2.2vw;
+    }
+
+    .newUserPageAboveImage p {
+        font-size: 2.5vw;
+    }
+
+}

@@ -58,6 +58,9 @@
  });
 </script>
 
+<svelte:head>
+  <title>EaglesEye24 | Home</title>
+</svelte:head>
 <style>
     .indexPageRight {
         width: 70%;
@@ -130,6 +133,41 @@
         border: 2px solid var(--main-color);
         border-radius: 2rem;
         background-color: var(--main-color);
+    }
+
+    @media (max-width: 450px), (max-height: 350px) {
+      .indexPageRight {
+        width: 80%;
+        padding: 3vh;
+      }
+
+      .indexPageRight h2 {
+        font-size: 3vw;
+      }
+
+      .indexPageRight h1 {
+        font-size: 5vw;
+      }
+
+      .indexPageRight p {
+        font-size: 2vw;
+      }
+
+      .indexPageAboveImage {
+        margin-bottom: 0vh;
+      }
+
+      .indexPageAboveImage h1 {
+        font-size: 5vw;
+      }
+
+      .indexPageAboveImage h4 {
+        font-size: 2.5vw;
+      }
+
+      .indexPageAboveImage p {
+        font-size: 3vw;
+      }
     }
 
 </style>

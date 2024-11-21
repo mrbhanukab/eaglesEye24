@@ -53,4 +53,10 @@
     box-shadow: 0 0 95px -12px var(--background-color, #ffffff);
     transition: box-shadow 0.5s ease-in;
   }
+
+  @media (max-width: 450px), (max-height: 350px) {
+    .bigButton {
+      font-size: 4vw;
+    }
+  }
 </style>
