@@ -41,7 +41,7 @@
 
 <div class="container" style="background: {backgroundColor}">
  <section class="split left">
-  <div class="onImage" style="background-image: url({props.imgSrc});">
+  <div class="onImage" style="background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.30) 80.5%),url({props.imgSrc})  lightgray 50% / cover no-repeat;">
    <header>
 
     <div class="eventLogo">
@@ -67,14 +67,15 @@
 </div>
 
 <style>
-.container {
-    display: flex;
-    flex-direction: row;
-		align-items: center;
-    height: 100vh;
-    width: 100vw;
-    background: var(--background-color);
-}
+ .container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: var(--background-color);
+ }
+
 .split {
     display: flex;
     justify-content: center;
@@ -82,30 +83,30 @@
     box-sizing: border-box;
     position: relative;
 }
-.left {
-    flex: 5;
-    position: relative;
-    height: 100%;
-		width: 100%;
-    background-size: cover;
-    background-position: center;
-}
-.onImage {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 97%;
-    height: 97%;
-    overflow: hidden;
-    box-sizing: border-box;
-    border-radius: 1rem;
-		padding: 1rem;
-		margin: 5rem;
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: center;
-}
+
+ .left {
+  flex: 5;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+ }
+
+ .onImage {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 97%;
+  height: 97%;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 5rem;
+ }
+
 header {
     display: flex;
     justify-content: space-between;

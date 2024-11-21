@@ -12,10 +12,10 @@
 //
 // export default config;
 
-import azure from 'svelte-adapter-azure-swa';
+import adapter from '@sveltejs/adapter-vercel';
 
 export default {
 	kit: {
-		adapter: azure()
-	}
+		adapter: adapter(),
+	},
 };
