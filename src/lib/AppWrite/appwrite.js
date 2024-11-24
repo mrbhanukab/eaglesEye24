@@ -1,5 +1,5 @@
 import { PUBLIC_PROJECT_ID } from '$env/static/public';
-import { Client, Account, Databases } from 'appwrite';
+import { Client, Account, Databases, Storage } from 'appwrite';
 
 const client = new Client()
 	.setEndpoint('https://cloud.appwrite.io/v1')

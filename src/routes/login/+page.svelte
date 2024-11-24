@@ -6,14 +6,17 @@
  import { onMount } from 'svelte';
  import { goto } from '$app/navigation';
  import { user } from '$lib/AppWrite/user.js';
+ import Loading from '$lib/UI/loading.svelte';
 
- let showOTP = $state(false);
+ let showOTP = false;
  let OTPInputs = [];
  let otp = ['', '', '', '', '', ''];
  let userInputs;
- let session = $state();
+ let session;
+ let isCacheComplete = false;
+ let verifyImageUrl = '';
 
- $effect(() => {
+ onMount(() => {
   if (showOTP) {
    OTPInputs = Array.from(document.querySelectorAll('.otp input'));
   }
@@ -55,14 +58,22 @@
    showOTP = true;
   }
  }
+
+ function handleCacheComplete(event) {
+  isCacheComplete = true;
+  verifyImageUrl = event.detail.cachedUrls['verify.jpeg'];
+ }
 </script>
 
 <svelte:head>
  <title>EaglesEye24 | Login</title>
 </svelte:head>
 
-<MainLayout imgSrc="/left/verify.jpeg">
- {#snippet aboveImage()}
+{#if !isCacheComplete}
+ <Loading on:cacheComplete={handleCacheComplete} />
+{:else}
+ <MainLayout imgSrc={verifyImageUrl}>
+  {#snippet aboveImage()}
     <div class="newUserPageAboveImage">
      <h1>Login to Your Account</h1>
      <h4>Enter your email, and we will send you an OTP</h4>
@@ -90,4 +101,5 @@
     <TheBigButton title={!showOTP ? "Send Me the OTP" : "Log Me In"} type="submit" />
    </form>
    {/snippet}
-</MainLayout>
+ </MainLayout>
+{/if}

@@ -7,14 +7,14 @@
 }
 
 .indexPageRight h2 {
-    font-size: 1.6vw;
+    font-size: 1.3vw;
     font-style: normal;
     font-weight: 300;
     line-height: 0;
 }
 
 .indexPageRight h1 {
-    font-size: 3vw;
+    font-size: 2.6vw;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -23,13 +23,20 @@
 
 .indexPageRight p {
     text-align: justify;
-    font-size: 1vw;
+    font-size: 0.9vw;
     font-style: normal;
     font-weight: 400;
     line-height: 137.5%;
     margin-bottom: 4rem;
 }
 
+.indexPageRight a{
+    text-align: center;
+    padding-top: 4vh;
+    color: white;
+    font-family: Comfortaa, sans-serif;
+    font-size: 1.3vw;
+}
 .indexPageAboveImage {
     color: white;
     text-shadow: 0 0 1rem black;
@@ -40,18 +47,18 @@
 }
 
 .indexPageAboveImage h1 {
-    font-size: 2.5vw;
+    font-size: 2.2vw;
     font-weight: 600;
 }
 
 .indexPageAboveImage h4 {
-    font-size: 1.1vw;
+    font-size: 1vw;
     font-weight: 300;
 }
 
 .indexPageAboveImage p {
     width: 70%;
-    font-size: 1.2vw;
+    font-size: 1.1vw;
     font-weight: 400;
     line-height: 120%;
 }
@@ -106,4 +113,10 @@
     .indexPageAboveImage p {
         font-size: 3vw;
     }
+
+    .indexPageRight a{
+        padding-top: 2vh;
+        font-size: 3vw;
+    }
+
 }
