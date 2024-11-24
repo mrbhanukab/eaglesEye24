@@ -1,0 +1,136 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    background: #2F2F2F !important;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8vw;
+    justify-content: space-evenly;
+}
+
+.aetos, .right {
+    flex: 1;
+    margin: 1.5vh 0;
+}
+
+.component {
+    border-radius: 1rem;
+    background: #212121;
+    width: 100%;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.40));
+}
+
+.subComponent {
+    width: 98%;
+    border-radius: 1rem;
+    flex: 1;
+    background: #444;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5vh;
+}
+
+.aetosMindAndXploratus{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1.5vh;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1vw;
+}
+
+.eventLogo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    padding: 0.2rem;
+}
+
+.eventLogo h1 {
+    text-shadow: 0 0 50px #000;
+    font-family: Lexend, sans-serif;
+    font-size: 0.9vw;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.collaboration {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+.collaboration h2 {
+    color: white;
+    font-family: Comfortaa, sans-serif;
+    font-size: 0.3vw;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 150%;
+    text-transform: capitalize;
+}
+
+.collaboration h2 span {
+    font-size: 0.5vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px;
+}
+
+.collaboration img {
+    width: auto;
+    height: 1.8vw;
+    margin-left: 0.3rem;
+    flex-shrink: 0;
+}
+
+.icacLogo {
+    max-width: 3.5vw !important;
+    height: auto !important;
+    object-fit: contain;
+}
+
+.user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #FFF;
+    font-family: Comfortaa;
+    font-style: normal;
+}
+
+.userInfo h3{
+    font-size: 0.9vw;
+    font-weight: 700;
+    line-height: 0;
+    text-transform: capitalize;
+    text-overflow: ellipsis !important;
+}
+
+.userInfo p{
+    font-size: 0.8vw;
+    font-weight: 300;
+    line-height: 0;
+    text-overflow: ellipsis;
+}

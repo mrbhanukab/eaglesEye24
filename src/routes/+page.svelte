@@ -1,9 +1,20 @@
 <script>
+  import './home.css';
  import { onMount } from 'svelte';
  import { goto } from '$app/navigation';
  import MainLayout from '$lib/UI/mainLayout.svelte';
  import TheBigButton from '$lib/UI/theBigButton.svelte';
+ import Loading from '$lib/UI/loading.svelte';
  import { leastUsedColor } from '../stores/colors.svelte.js';
+ import { user } from '$lib/AppWrite/user.js';
+
+ async function checkSessionAndRedirect() {
+   if (await user.getCurrentSession() != null) {
+     await goto('/portal');
+   }
+ }
+
+ checkSessionAndRedirect();
 
  const events = new Map([
   [
@@ -61,116 +72,8 @@
 <svelte:head>
   <title>EaglesEye24 | Home</title>
 </svelte:head>
-<style>
-    .indexPageRight {
-        width: 70%;
-        color: white;
-        font-family: Comfortaa, sans-serif;
-    }
 
-    .indexPageRight h2 {
-        font-size: 1.6vw;
-        font-style: normal;
-        font-weight: 300;
-        line-height: 0;
-    }
-
-    .indexPageRight h1 {
-        font-size: 3vw;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-        text-transform: capitalize;
-    }
-
-    .indexPageRight p {
-        text-align: justify;
-        font-size: 1vw;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 137.5%;
-        margin-bottom: 4rem;
-    }
-
-    .indexPageAboveImage {
-        color: white;
-        text-shadow: 0 0 1rem black;
-        font-family: Comfortaa, sans-serif;
-        text-transform: capitalize;
-        line-height: 0%;
-    margin-bottom: 1vh;
-    }
-
-    .indexPageAboveImage h1 {
-        font-size: 2.5vw;
-        font-weight: 600;
-    }
-
-    .indexPageAboveImage h4 {
-        font-size: 1.1vw;
-        font-weight: 300;
-    }
-
-    .indexPageAboveImage p {
-        width: 70%;
-        font-size: 1.2vw;
-        font-weight: 400;
-        line-height: 120%;
-    }
-
-    .eventIndicator {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 1vw;
-        width: 100%;
-    }
-
-    .eventIndicator span {
-        width: 3vw;
-        height: 1vw;
-        display: inline-block;
-        border: 2px solid var(--main-color);
-        border-radius: 2rem;
-        background-color: var(--main-color);
-    }
-
-    @media (max-width: 450px), (max-height: 350px) {
-      .indexPageRight {
-        width: 80%;
-        padding: 3vh;
-      }
-
-      .indexPageRight h2 {
-        font-size: 3vw;
-      }
-
-      .indexPageRight h1 {
-        font-size: 5vw;
-      }
-
-      .indexPageRight p {
-        font-size: 2vw;
-      }
-
-      .indexPageAboveImage {
-        margin-bottom: 0vh;
-      }
-
-      .indexPageAboveImage h1 {
-        font-size: 5vw;
-      }
-
-      .indexPageAboveImage h4 {
-        font-size: 2.5vw;
-      }
-
-      .indexPageAboveImage p {
-        font-size: 3vw;
-      }
-    }
-
-</style>
+<Loading />
 
 <MainLayout imgSrc={currentEvent.image} alt={currentEvent.name}>
  {#snippet aboveImage()}
@@ -194,6 +97,8 @@
     joining the exhibition or quiz competition as part of a team, the team captain must create the team in the
     portal. The captain will then add members by entering their usernames and unique private keys, which are
     generated for each user.</p>
-  <TheBigButton title="Create Your Account" onclick={() => goto('/NewUser')}/>  </div>
+  <TheBigButton title="Create Your Account" onclick={() => goto('/NewUser')}/>
+  <a href="/login" style="text-align: center; padding-top: 2vh; color: white; font-family: Comfortaa, sans-serif;">Login With Your Email</a>
+  </div>
  {/snippet}
 </MainLayout>

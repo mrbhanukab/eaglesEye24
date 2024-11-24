@@ -4,84 +4,75 @@
  import TheBigButton from '$lib/UI/theBigButton.svelte';
  import { onMount } from 'svelte';
  import { user } from '$lib/AppWrite/user.js';
+ import { goto } from '$app/navigation';
 
- let { email } = $props();
- let userId = $state(null);
- let inputs = [];
+ let { data } = $props();
+ let session = $state({});
+ let OTPInputs = [];
  let otp = ['', '', '', '', '', ''];
+ let otpSent = false;
+
+ onMount(() => {
+   if (!otpSent) {
+     sendOTP();
+     otpSent = true;
+   }
+ });
 
  async function sendOTP() {
   try {
-   const sessionToken = await user.createOtp(email);
-   userId = sessionToken.userId;
+    session = await user.createOtp(data.Email);
   } catch (error) {
-   console.error('Error sending OTP:', error);
+   alert(`Error sending OTP: ${error.message}`);
   }
  }
+
+ $effect(() => OTPInputs = Array.from(document.querySelectorAll('.otp input')));
 
  function handleKeyUp(event, index) {
-  const { keyCode, target } = event;
-  const value = target.value;
+   const { keyCode, target } = event;
+   const value = target.value;
 
-  otp[index] = value;
+   otp[index] = value;
 
-  if (keyCode === 8 || keyCode === 37) {
-   if (index > 0 && !value) {
-    inputs[index - 1].focus();
+   if (keyCode === 8 || keyCode === 37) {
+     if (index > 0 && !value) {
+       OTPInputs[index - 1].focus();
+     }
+   } else if (value && ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 105) || keyCode === 39)) {
+     if (index < OTPInputs.length - 1) {
+       OTPInputs[index + 1].focus();
+     }
    }
-  } else if (value && ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 105) || keyCode === 39)) {
-   if (index < inputs.length - 1) {
-    inputs[index + 1].focus();
-   }
-  }
  }
 
- onMount(() => {
-  inputs = Array.from(document.querySelectorAll('.otp input'));
-  sendOTP();
- });
-
- async function handleSubmit(event) {
-  event.preventDefault();
-  const otpValue = otp.join('');
-
-  try {
-   const currentSession = await user.getCurrentSession();
-   if (currentSession) {
-    await user.logout();
-   }
-   const session = await user.verifyOtp(userId, otpValue);
-   alert('Verification successful!');
-  } catch (error) {
-   console.error('There was an error!', error);
-   alert('Error');
-  }
+ const handleSubmit = async (event) => {
+   event.preventDefault();
+     try {
+       await user.createUser(data, session, otp.join(''));
+       await goto('/portal');
+   } catch (error) {
+       alert(error.message);
+     }
  }
 
 </script>
 
 <style>
- .otp {
-  width: 70%;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1vw;
- }
- .aboutOTP {
-  width: 75%;
-  text-align: center;
-  color: white;
-  font-family: Comfortaa, sans-serif;
-  font-weight: lighter;
-  font-size: 1vw;
-  line-height: 2.6vh;
- }
- .OTPsection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
- }
+  .otp {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .aboutOTP {
+    text-align: center;
+    color: white;
+    font-family: Comfortaa, sans-serif;
+    font-weight: lighter;
+    font-size: 1vw;
+    line-height: 2.6vh;
+  }
+
  @media (max-width: 450px), (max-height: 350px) {
   .otp {
    width: 80%;
@@ -97,36 +88,31 @@
 </style>
 
 <MainLayout imgSrc="/left/verify.jpeg">
- {#snippet aboveImage()}
-  <div class="newUserPageAboveImage">
-   <h1>Verify Your Account</h1>
-   <h4>Enter the OTP Sent to Your Email</h4>
-   <p>
-    We’ve sent a One-Time Password (OTP) to the email address you provided earlier {email}.
-    Check your inbox and enter the 6-digit code to complete the verification process. If you can’t find the email,
-    please check your spam or junk folder.
-   </p>
-  </div>
- {/snippet}
- {#snippet right()}
-  <form class="newUserPageRight" onsubmit={handleSubmit}>
-   <section class="OTPsection">
-    <div class="otp">
-     {#each Array(6) as _, i}
-      <ButterflyInput
-       type="text"
-       maxlength="1"
-       style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
-       onkeyup={(event) => handleKeyUp(event, i)}
-      />
-     {/each}
+  {#snippet aboveImage()}
+    <div class="newUserPageAboveImage">
+      <h1>Verify Your Account</h1>
+      <h4>Enter the OTP Sent to Your Email</h4>
+      <p>Hi, {data.Name}! You will receive a 6-digit One-Time Passcode (OTP) at your email address: <b>{data.Email}</b>. Please enter the OTP to proceed. If you can't find the email, check your Spam or Junk folder. Ensure the email is from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b> team and contains the security phrase:
+        <b style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase || 'loading'}'</b> at the bottom before entering the OTP.</p>
     </div>
-    <h3 class="aboutOTP">
-     We've sent a One Time Passcode to {email}.
-     It should arrive from eaglesEye24 team. Can't find it? Check your junk/spam folder—sometimes messages take a detour!
-    </h3>
-   </section>
-   <TheBigButton title="Verify & Take Off!" type="submit" />
-  </form>
- {/snippet}
+  {/snippet}
+  {#snippet right()}
+    <form class="newUserPageRight" style="justify-content: center !important; gap: 2vh" onsubmit={handleSubmit}>
+      <ButterflyInput name="Enter the OTP You Received" type="email" disabled value={data.Email} />
+        <div class="otp">
+          {#each Array(6) as _, i}
+            <ButterflyInput
+              type="number"
+              maxlength="1"
+              style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
+              onkeyup={(event) => handleKeyUp(event, i)}
+            />
+          {/each}
+        </div>
+        <h3 class="aboutOTP">
+          The email you received must be from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b> team and contain the phrase <b style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase || 'loading'}'</b>. Can't find it? Check your Junk/Spam folder—it might have taken a detour!
+        </h3>
+      <TheBigButton title="Verify & Take Off!" type="submit" />
+    </form>
+  {/snippet}
 </MainLayout>
