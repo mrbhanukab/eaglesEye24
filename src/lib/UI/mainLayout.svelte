@@ -176,7 +176,7 @@
     height: 100%;
   }
 
-  @media (max-width: 450px), (max-height: 350px) {
+  @media (max-width: 450px) {
     .eventLogo h1 {
       font-size: 4vw;
     }

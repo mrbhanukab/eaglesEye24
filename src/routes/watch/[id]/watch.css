@@ -1,0 +1,170 @@
+.youtube{
+    width: 100vw;
+    height: 100vh;
+    background: #212121;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.youtuubeContainer{
+    padding: 2%;
+    margin-bottom: 2%;
+    width: 95%;
+    height: 90% !important;
+    border-radius: 1rem;
+    background: #212121;
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+}
+
+.youtube-video-container {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.youtube-video-container iframe {
+    border-radius: 1rem;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.40));
+    width: 100%;
+    height: 100%;
+}
+
+.youtube-liveChat-container{
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.youtube-liveChat-container iframe{
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.40));
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.eventLogo {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    padding: 0.2rem;
+}
+
+.eventLogo h1 {
+    text-shadow: 0 0 50px #000;
+    font-family: Lexend, sans-serif;
+    font-size: 2.5vw;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.collaboration {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+.collaboration h2 {
+    color: white;
+    font-family: Comfortaa, sans-serif;
+    font-size: 0.8vw;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 150%;
+    text-transform: capitalize;
+}
+
+.collaboration h2 span {
+    font-size: 1vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px;
+}
+
+.collaboration img {
+    width: auto;
+    height: 3vw;
+    margin-left: 0.3rem;
+    flex-shrink: 0;
+}
+
+.icacLogo {
+    max-width: 6vw !important;
+    height: auto !important;
+    object-fit: contain;
+}
+
+.eventDetails{
+    color: white;
+}
+
+.eventDetails h2{
+    font-family: Lexend, sans-serif;
+    font-size: 3vw !important;
+    font-style: normal;
+    font-weight: bolder;
+    line-height: 0;
+}
+
+.eventDetails p{
+    font-family: Comfortaa, sans-serif;
+    font-size: 1.5vw !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0;
+}
+
+.eventDetails span{
+    font-weight: bolder;
+}
+
+@media (max-width: 600px), (max-height: 400px) {
+    .eventLogo h1 {
+        font-size: 4vw;
+    }
+
+    .collaboration h2 {
+        font-size: 1.5vw;
+    }
+
+    .collaboration h2 span {
+        font-size: 2vw;
+    }
+
+    .collaboration img {
+        height: 5vw;
+    }
+
+    .icacLogo {
+        max-width: 9vw !important;
+    }
+
+    .youtube{
+        min-height: 100vh !important;
+    }
+    .youtuubeContainer{
+        flex-direction: column !important;
+        gap: 2vh;
+    }
+    .eventDetails h2{
+        font-size: 5vw !important;
+        line-height: 2vh;
+    }
+
+    .eventDetails p{
+        font-size: 3vw !important;
+    }
+}

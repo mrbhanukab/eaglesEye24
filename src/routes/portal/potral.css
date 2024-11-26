@@ -1,6 +1,6 @@
 .container {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: #2F2F2F !important;
     display: flex;
     flex-direction: row;
@@ -25,8 +25,10 @@
     border-radius: 1rem;
     flex: 1;
     background: #444;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
-
 .right {
     display: flex;
     flex-direction: column;
@@ -116,7 +118,7 @@
     flex-direction: column;
     align-items: center;
     color: #FFF;
-    font-family: Comfortaa;
+    font-family: Comfortaa, serif;
     font-style: normal;
 }
 
@@ -133,4 +135,286 @@
     font-weight: 300;
     line-height: 0;
     text-overflow: ellipsis;
+}
+
+.subComponent h1{
+    writing-mode: sideways-lr;
+    text-orientation: sideways-right;
+    color: #FFF;
+    font-family: Lexend, serif;
+    font-size: 200%;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 0;
+}
+
+.subComponent .content{
+    border-radius: 1rem;
+    background: #212121;
+    width: 100%;
+    height: 95%;
+    margin-right: 1.5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.content .teamInfo{
+    flex: 2;
+    color: #FFF;
+    font-family: Comfortaa, serif;
+}
+
+.content .eventInfo{
+    flex: 1;
+    background: white;
+    margin: 3%;
+    border-radius: 1rem;
+}
+
+.teamInfo{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    height: 100%;
+}
+
+.teamInfo h2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.5vw;
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 2vw;
+}
+
+.teamInfo ol{
+    flex: 2;
+    color: #FFF;
+    font-family: Comfortaa, serif;
+    font-weight: normal;
+    font-size: 100%;
+    overflow: auto;
+}
+
+.aetos{
+    display: flex;
+    flex-direction: column;
+    padding: 1vw;
+}
+
+.aetos #head{
+    color: #FFF;
+    font-family: Lexend, serif;
+    font-size: 200%;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 0;
+}
+.latestLecture{
+    border-radius: 1rem;
+    flex: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+}
+
+.lectureInfo{
+    color: white;
+    border-radius: 1rem;
+    background: rgba(33, 33, 33, 0.64);
+    width: 70% !important;
+    height: 50% !important;
+    display: flex;
+    flex-direction: row;
+    align-self: end;
+    margin: 1.5vw;
+    padding: 0 1.2vw;
+    justify-content: space-between;
+}
+
+.lectureInfo .info{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lectureInfo .info h1,
+.lectureInfo .info h6,
+.lectureInfo .dateOrLink h1,
+.lectureInfo .dateOrLink h6{
+    width: 92% !important;
+    margin: 0;
+    padding: 0;
+}
+
+.lectureInfo .info h1{
+    display: -webkit-box;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Lexend;
+    font-size: 2.2vw;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.lectureInfo .info h6{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Comfortaa;
+    font-size: 1.3vw;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2;
+}
+
+.lectureInfo .info h6 span{
+    font-weight: 700;
+}
+
+.lectureInfo .dateOrLink{
+    flex: 1;
+    margin: 2%;
+    background: white;
+    color: black!important;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.lectureInfo .dateOrLink h1{
+    font-family: Lexend;
+    font-size: 5vw;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.lectureInfo .dateOrLink h6{
+    font-family: Comfortaa;
+    font-size: 1.5vw;
+    font-weight: 200;
+
+}
+
+.lectureTable{
+    width: 100%;
+    flex: 1 !important;
+    color: white;
+    font-family: Comfortaa;
+    line-height: normal;
+    font-style: normal;
+}
+
+.lectureTable h2{
+    font-size: 2.2vw;
+    font-weight: 700;
+}
+
+.lectureTable table{
+    width: 100%;
+    border-collapse: collapse;
+
+    /*background: aqua;*/
+}
+
+.lectureTable table tbody tr td{
+    padding: 1%;
+}
+
+.lectureTable table tbody tr{
+    border-bottom: 0.3vh solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10%;
+}
+
+.lectureTitle{
+    font-size: 1.5vw;
+    font-weight: 300;
+}
+
+.lectureLecturer{
+    font-size: 1.2vw;
+    font-weight: 300;
+}
+
+.lectureLecturer span{
+    font-weight: 700;
+    font-size: 1.3vw;
+    text-transform: capitalize;
+}
+
+.lectureDate{
+    font-size: 1.3vw;
+    font-weight: 500;
+}
+
+.lectureDate a{
+    color: #b6d1ff;
+}
+
+.dateOrLink a{
+    text-decoration: none;
+    color: black;
+}
+@media (max-width: 785px), (max-height: 480px) {
+    .container {
+        flex-direction: column !important;
+        gap: 0.8vw;
+        justify-content: space-evenly;
+    }
+    .right {
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .aetosMindAndXploratus{
+        padding: 2vh;
+    }
+    .subComponent .content{
+        height: 100%;
+        margin: 2vh!important;
+    }
+    .subComponent h1{
+        font-size: 4vh;
+    }
+    .teamInfo ol{
+        font-size: 1.9vh;
+    }
+    .teamInfo h2{
+        font-size: 2.1vh;
+    }
+    .eventLogo h1 {
+        font-size: 2.5vw;
+    }
+    .collaboration h2 {
+        font-size: 1.5vw;
+    }
+    .collaboration h2 span {
+        font-size: 2vw;
+    }
+    .collaboration img {
+        height: 5vw;
+    }
+    .userInfo h3 {
+        font-size: 2.5vw;
+    }
+    .userInfo p {
+        font-size: 2vw;
+    }
+    .header {
+        flex-direction: column-reverse;
+        justify-content: space-evenly;
+        gap: 2vh;
+    }
+
 }

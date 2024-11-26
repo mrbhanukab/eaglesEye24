@@ -54,7 +54,7 @@
     transition: box-shadow 0.5s ease-in;
   }
 
-  @media (max-width: 450px), (max-height: 350px) {
+  @media (max-width: 450px) {
     .bigButton {
       font-size: 4vw;
     }

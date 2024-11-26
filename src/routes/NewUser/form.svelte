@@ -30,7 +30,7 @@
     <ButterflyInput name="Gender" placeholder="M/F" type="text" required={true} pattern="[mMfF]" />
    </span>
 		 <ButterflyInput name="Whatsapp" placeholder="+94123456789" type="tel" value="+94" required={true} />
-		 <ButterflyInput name="School" placeholder="School Name, Location" type="text" required={true} />
+		 <ButterflyInput name="School-University" placeholder="School/University Name, Location" type="text" required={true} />
 		 <TheBigButton title="Create Your Account" type="submit" />
 	 </form>
  {/snippet}

@@ -16,8 +16,10 @@ export const user = {
 
  getCurrentSession: async () => {
   try {
-   return await account.getSession('current');
+   const session = await account.get();
+   return session;
   } catch (error) {
+   console.error('Error fetching session:', error);
    return null;
   }
  },
