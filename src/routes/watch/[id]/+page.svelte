@@ -55,7 +55,7 @@
         <iframe
           src="https://www.youtube.com/embed/{data.id}"
           frameborder="0"
-          allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allow="autoplay; encrypted-media; picture-in-picture"
           allowfullscreen
         ></iframe>
         			<div class="eventDetails">

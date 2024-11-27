@@ -5,6 +5,7 @@
   import { user } from '$lib/AppWrite/user.js';
   import Loading from '$lib/UI/loading.svelte';
   import { webAppDB } from '$lib/AppWrite/database.js';
+  import { WebApp } from '$lib/AppWrite/storage.js';
 
   let logos = null;
   let currentUser = null;
@@ -14,6 +15,8 @@
   let upcoming = [];
   let notFixed = [];
   let now;
+  let imgSrc;
+  let isLoading = true;
 
   async function fetchData() {
     currentUser = await user.getUser();
@@ -77,9 +80,12 @@
         return new Date(dateA) - new Date(dateB);
       });
 
-      console.log('Archived:', archived);
-      console.log('Upcoming:', upcoming);
-      console.log('Not Fixed:', notFixed);
+      const fileId = upcoming[0]?.Image || notFixed[0]?.Image;
+      if (fileId) {
+        imgSrc = await WebApp.getFile(fileId);
+        console.log(imgSrc);
+      }
+      isLoading = false;
     } catch (error) {
       console.error('Error fetching or sorting data:', error);
     }
@@ -136,18 +142,18 @@
   <div class="container">
     <section class="component aetos" style="margin-left: 0.8vw">
       <h1 id="head">Aetos Path</h1>
-      <div class="latestLecture" style="background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.30) 80.5%);">
+      <div class="latestLecture" style="background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.30) 80.5%),url({imgSrc}) lightgray 50% / cover no-repeat;">
         <div class="lectureInfo">
           <div class="info">
             <h1>{upcoming[0]?.Title ?? notFixed[0]?.Title ?? "No Title"}</h1>
             <h6>{upcoming[0]?.lecture ?? notFixed[0]?.lecture ?? "Unknown Lecturer"}</h6>
           </div>
-<div class="dateOrLink">
-{#if upcoming[0] && new Date(upcoming[0].start) <= now && (!new Date(upcoming[0].end) || new Date(upcoming[0].end) >= now)}
-  <a href="/watch/{upcoming[0].youtube}">
-    <h1>▶</h1>
-    <h6>Watch Live</h6>
-  </a>
+          <div class="dateOrLink">
+            {#if upcoming[0] && new Date(upcoming[0].start) <= now && (!new Date(upcoming[0].end) || new Date(upcoming[0].end) >= now)}
+              <a href="/watch/{upcoming[0].youtube}">
+                <h1>▶</h1>
+                <h6>Watch Live</h6>
+              </a>
 {:else if upcoming[0]}
   <h1>{new Date(upcoming[0].start).getDate() ?? "--"}</h1>
   <h6>{new Date(upcoming[0].start).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) ?? "Not Fixed"}</h6>

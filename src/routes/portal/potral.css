@@ -203,6 +203,7 @@
     display: flex;
     flex-direction: column;
     padding: 1vw;
+    /*min-height: 100vh;*/
 }
 
 .aetos #head{
@@ -215,10 +216,14 @@
 }
 .latestLecture{
     border-radius: 1rem;
-    flex: 1 !important;
+    flex: 2 !important;
     width: 100% !important;
     height: 100% !important;
     display: flex;
+}
+
+.dateOrLink{
+    flex: 1 !important;
 }
 
 .lectureInfo{

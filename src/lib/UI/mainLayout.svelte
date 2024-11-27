@@ -16,7 +16,7 @@
   }
 
   const props = $props();
-  let backgroundColor = $state('#ffffff');
+  let backgroundColor = $state('#0000');
 
   function updateBackgroundColor() {
     if (typeof window !== 'undefined') {

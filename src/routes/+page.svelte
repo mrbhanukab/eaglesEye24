@@ -1,5 +1,5 @@
 <script>
-  import './home.css';
+  import './page.css';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import MainLayout from '$lib/UI/mainLayout.svelte';
