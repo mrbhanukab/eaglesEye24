@@ -29,6 +29,7 @@
 		"auto-text-size": "^0.2.2",
 		"colorthief": "^2.6.0",
 		"flowbite-svelte": "^0.47.3",
+		"node-appwrite": "^14.1.0",
 		"ntp-client": "^0.5.3"
 	}
 }

@@ -27,7 +27,7 @@
   });
 </script>
 
-<button class="bigButton" onclick={props.onclick} type={props.type}>
+<button class="bigButton" {...props}>
   {props.title}
 </button>
 

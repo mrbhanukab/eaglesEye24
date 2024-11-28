@@ -6,7 +6,7 @@
   let backgroundColor = '#ffffff';
   let inputElement = $state(null);
 
-  const props = $props();
+  const props= $props();
 
   const unsubscribeBackground = leastUsedColor.subscribe(value => {
     if (value) {

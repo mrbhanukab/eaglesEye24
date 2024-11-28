@@ -113,8 +113,8 @@
           joining the exhibition or quiz competition as part of a team, the team captain must create the team in the
           portal. The captain will then add members by entering their usernames and unique private keys, which are
           generated for each user.</p>
-        <TheBigButton title="Create Your Account" onclick={() => goto('/NewUser')} />
-        <a href="/login" >Login With Your Email</a>
+        <TheBigButton title="Create Your Account" onclick={() => goto('/user/NewUser')} />
+        <a href="/user/login" >Login With Your Email</a>
       </div>
     {/snippet}
   </MainLayout>
