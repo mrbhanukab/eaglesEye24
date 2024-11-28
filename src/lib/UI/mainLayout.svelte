@@ -3,20 +3,14 @@
   import ColorThief from 'colorthief';
   import { mostUsedColor, leastUsedColor } from '../../stores/colors.svelte.js';
 
-  let logos = $state(null);
-
-  async function fetchLogos() {
-    const cache = await caches.open('file-cache');
-    const cachedResponse = await cache.match('https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433d90001d87767130/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85');
-    if (cachedResponse) {
-      logos = await cachedResponse.json();
-    } else {
-      console.error('logos.json not found in cache');
-    }
-  }
-
   const props = $props();
+  let logos = $state(null);
   let backgroundColor = $state('#0000');
+
+  async function fetchData() {
+    const response = await fetch('/logos.json');
+    logos = await response.json();
+  }
 
   function updateBackgroundColor() {
     if (typeof window !== 'undefined') {
@@ -38,7 +32,7 @@
   }
 
   onMount(() => {
-    fetchLogos();
+    fetchData();
   });
 
   $effect(() => updateBackgroundColor());
@@ -88,7 +82,7 @@
   .left {
     flex: 5;
     position: relative;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     background-size: cover;
     background-position: center;
@@ -105,7 +99,7 @@
     box-sizing: border-box;
     border-radius: 1rem;
     padding: 1rem;
-    margin: 5rem;
+    /*margin: 50rem;*/
   }
 
   header {
@@ -173,6 +167,7 @@
 
   .right {
     flex: 6;
+    width: 100%;
     height: 100%;
   }
 
@@ -205,10 +200,12 @@
 
     .left {
       flex: 3 !important;
+      height: 75vh;
     }
 
     .right {
       flex: 2 !important;
+      width: 100vw;
     }
   }
 </style>

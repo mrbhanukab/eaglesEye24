@@ -1,105 +1,125 @@
 <script>
- import './login.css';
- import MainLayout from '$lib/UI/mainLayout.svelte';
- import ButterflyInput from '$lib/UI/butterflyInput.svelte';
- import TheBigButton from '$lib/UI/theBigButton.svelte';
- import { onMount } from 'svelte';
- import { goto } from '$app/navigation';
- import { user } from '$lib/AppWrite/user.js';
- import Loading from '$lib/UI/loading.svelte';
+	import '../NewUser/NewUser.css';
+	import MainLayout from '$lib/UI/mainLayout.svelte';
+	import ButterflyInput from '$lib/UI/butterflyInput.svelte';
+	import TheBigButton from '$lib/UI/theBigButton.svelte';
+	import { onMount } from 'svelte';
+	import { user } from '$lib/AppWrite/user.js';
+	import Loading from '$lib/UI/loading.svelte';
+	import { error } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
 
- let showOTP = false;
- let OTPInputs = [];
- let otp = ['', '', '', '', '', ''];
- let userInputs;
- let session;
- let isCacheComplete = false;
- let verifyImageUrl = '';
+	let loading = $state(true);
+	let showOTP = $state(false);
+  let image = $state("https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e4100376276f370/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85");
+	let OTPInputs = [];
+	let otp = ['', '', '', '', '', ''];
+	let userInputs;
+	let session = $state(null);
 
- onMount(() => {
-  if (showOTP) {
-   OTPInputs = Array.from(document.querySelectorAll('.otp input'));
-  }
- });
+	async function downloadImage() {
+		try {
+			const response = await fetch(image);
 
- function handleKeyUp(event, index) {
-  const { keyCode, target } = event;
-  const value = target.value;
+			if (!response.ok) error('404', `Image Not Found! [${image}]`);
 
-  otp[index] = value;
+			const blob = await response.blob();
 
-  if (keyCode === 8 || keyCode === 37) {
-   if (index > 0 && !value) {
-    OTPInputs[index - 1].focus();
-   }
-  } else if (value && ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 105) || keyCode === 39)) {
-   if (index < OTPInputs.length - 1) {
-    OTPInputs[index + 1].focus();
-   }
-  }
- }
+			image = URL.createObjectURL(blob);
+		} catch (error) {
+			console.error('Error downloading image:', error);
+		}
+	}
 
- const handleSubmit = async (event) => {
-  event.preventDefault();
-  const data = new FormData(event.target);
-  userInputs = Object.fromEntries(data.entries());
+	function handleKeyUp(event, index) {
+		const { keyCode, target } = event;
+		const value = target.value;
 
-  if (showOTP) {
-     try {
-      await user.login(session.userId, otp.join(''));
-      await goto('/portal');
-     } catch (error) {
-       alert(error.message);
-     }
-  }
+		otp[index] = value;
 
-  if (!showOTP) {
-   session = await user.createOtp(userInputs.Email);
-   showOTP = true;
-  }
- }
+		if (keyCode === 8 || keyCode === 37) {
+			if (index > 0 && !value) {
+				OTPInputs[index - 1].focus();
+			}
+		} else if (value && ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 105) || keyCode === 39)) {
+			if (index < OTPInputs.length - 1) {
+				OTPInputs[index + 1].focus();
+			}
+		}
+	}
 
- function handleCacheComplete(event) {
-  isCacheComplete = true;
-  verifyImageUrl = event.detail.cachedUrls['verify.jpeg'];
- }
+	onMount(async () => {
+		await downloadImage();
+		setTimeout(() => loading = false, 1500);
+	});
+
+	$effect(() => {
+		console.log('showOTP:', showOTP);
+		OTPInputs = Array.from(document.querySelectorAll('.otp input'))
+	});
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const data = new FormData(event.target);
+		userInputs = Object.fromEntries(data.entries());
+
+		if (showOTP) {
+			try {
+				await user.login(session.userId, otp.join(''));
+				await goto('/portal');
+			} catch (error) {
+				alert(error.message);
+			}
+		}
+
+		if (!showOTP) {
+			session = await user.createOtp(userInputs.Email);
+			showOTP = true;
+		}
+	};
+
 </script>
 
 <svelte:head>
- <title>EaglesEye24 | Login</title>
+	<title>EaglesEye24 | Login</title>
 </svelte:head>
 
-{#if !isCacheComplete}
- <Loading on:cacheComplete={handleCacheComplete} />
+{#if loading}
+	<Loading />
 {:else}
- <MainLayout imgSrc={verifyImageUrl}>
-  {#snippet aboveImage()}
-    <div class="newUserPageAboveImage">
-     <h1>Login to Your Account</h1>
-     <h4>Enter your email, and we will send you an OTP</h4>
-     <p>Enter your email address to log in. After clicking "Send me the OTP," you'll receive a 6-digit One-Time Password via email. Check your Spam/Junk folder if needed. Ensure the email contains the security phrase at the bottom before entering the OTP</p>
-    </div>
-  {/snippet}
-  {#snippet right()}
-   <form class="newUserPageRight" style="justify-content: center !important; gap: 2vh" onsubmit={handleSubmit}>
-  <ButterflyInput name={!showOTP ? "Email" : "Enter the OTP You Received"} type="email" disabled={showOTP} />
-    {#if showOTP}
-     <div class="otp">
-      {#each Array(6) as _, i}
-       <ButterflyInput
-         type="number"
-         maxlength="1"
-         style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
-         onkeyup={(event) => handleKeyUp(event, i)}
-       />
-      {/each}
-     </div>
-     <h3 class="aboutOTP">
-      The email you received must be from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b> team and contain the phrase <b style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase}.'</b> Can't find it? Check your Junk/Spam folder—it might have taken a detour!
-     </h3>
-    {/if}
-    <TheBigButton title={!showOTP ? "Send Me the OTP" : "Log Me In"} type="submit" />
-   </form>
-   {/snippet}
- </MainLayout>
+	<MainLayout imgSrc={image}>
+		{#snippet aboveImage()}
+			<div class="newUserPageAboveImage">
+				<h1>Login to Your Account</h1>
+				<h4>Enter your email, and we will send you an OTP</h4>
+				<p>Enter your email address to log in. After clicking "Send me the OTP," you'll receive a 6-digit One-Time
+					Password via email. Check your Spam/Junk folder if needed. Ensure the email contains the security phrase at
+					the bottom before entering the OTP</p>
+			</div>
+		{/snippet}
+		{#snippet right()}
+			<form class="newUserPageRight" style="justify-content: center !important; gap: 2vh"  onsubmit={handleSubmit}>
+				<ButterflyInput name={!showOTP ? "Email" : "Enter the OTP You Received"} type="email" disabled={showOTP} />
+				{#if showOTP}
+					<div class="otp">
+						{#each Array(6) as _, i}
+							<ButterflyInput
+								type="number"
+								maxlength="1"
+								style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
+								onkeyup={(event) => handleKeyUp(event, i)}
+							/>
+						{/each}
+					</div>
+					<h3 class="aboutOTP">
+						The email you received must be from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b>
+						team and contain the phrase <b
+						style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase}.'</b> Can't find it?
+						Check your Junk/Spam folder—it might have taken a detour!
+					</h3>
+				{/if}
+				<TheBigButton title={!showOTP ? "Send Me the OTP" : "Log Me In"} type="submit" />
+			</form>
+		{/snippet}
+	</MainLayout>
 {/if}

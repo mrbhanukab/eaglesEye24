@@ -98,6 +98,7 @@
 
   const logout = async () => {
     await user.logout();
+    console.log('Logged out');
     await goto('/');
   };
 

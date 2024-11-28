@@ -1,7 +1,7 @@
 .newUserPageRight {
     display: flex;
-    width: 90%;
     height: 80%;
+    width: 90%;
     flex-direction: column;
     justify-content: space-evenly;
 }
@@ -37,9 +37,22 @@
     line-height: 120%;
 }
 
-@media (max-width: 450px), (max-height: 350px) {
+.otp {
+    display: flex;
+    justify-content: space-between;
+}
+
+.aboutOTP {
+    text-align: center;
+    color: white;
+    font-family: Comfortaa, sans-serif;
+    font-weight: lighter;
+    font-size: 1vw;
+    line-height: 2.6vh;
+}
+
+@media (max-width: 450px) {
     .newUserPageRight {
-        width: 100% !important;
         height: 100% !important;
     }
 
@@ -59,4 +72,16 @@
         font-size: 2.5vw;
     }
 
+    .otp {
+        width: 100%;
+    }
+
+    .aboutOTP {
+        font-size: 2.5vw;
+        line-height: normal;
+    }
+
+    .newUserPageRight {
+        width: 80% !important;
+    }
 }

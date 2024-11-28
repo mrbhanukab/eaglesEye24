@@ -37,7 +37,22 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
-# [`+page.svelte`]()
-Client Side
-1. Download Iamges
-2. 
+# Changelog
+- Now on Browser will take care of caching
+
+Checking Stuff
+- +error.svelte | [✅|🖥️|📱]
+- +page.svelte | [✅|🖥️|📱]
+   - Add User Checking Before Page Load
+   - Add New Loading Method
+- mainLayout.svelte | [✅|🖥️|📱]
+   - statically host logos.json
+- /user/login | [✅|🖥️|📱]
+  - Logged User can't Re-login | ✅
+  - Add New Loading Method
+  - Fix CSS and Now Mobile Responsive
+- /user/NewUser
+  - Logged User can't Recreate account | ✅
+  - Add New Loading Method
+  - Fix CSS and Now Mobile Responsive
+  - Currently Here Still Use Client For Databse, will fix in next update

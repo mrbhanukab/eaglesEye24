@@ -57,35 +57,6 @@
  }
 </script>
 
-<style>
- .otp {
-  display: flex;
-  justify-content: space-between;
- }
-
- .aboutOTP {
-  text-align: center;
-  color: white;
-  font-family: Comfortaa, sans-serif;
-  font-weight: lighter;
-  font-size: 1vw;
-  line-height: 2.6vh;
- }
-
- @media (max-width: 450px), (max-height: 350px) {
-  .otp {
-   width: 80%;
-  }
-  .aboutOTP {
-   font-size: 2.5vw;
-   line-height: normal;
-  }
-  .newUserPageRight {
-   width: 80% !important;
-  }
- }
-</style>
-
 <MainLayout {imgSrc}>
  {#snippet aboveImage()}
   <div class="newUserPageAboveImage">

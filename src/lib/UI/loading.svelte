@@ -18,27 +18,27 @@
         const cachedUrls = {};
 
         for (const file of filesToCache) {
-            const cachedResponse = await cache.match(file.url);
-            if (cachedResponse) {
-                const dateHeader = cachedResponse.headers.get('date');
-                if (dateHeader) {
-                    const cachedTime = new Date(dateHeader).getTime();
-                    const currentTime = Date.now();
-                    if (currentTime - cachedTime < CACHE_MAX_AGE) {
-                        cachedUrls[file.name] = file.url;
-                        continue; // Cache is still valid
-                    }
-                }
-            }
-
-            // Fetch and cache the file
-            const response = await fetch(file.url);
-            if (response.ok) {
-                await cache.put(file.url, response);
+            // const cachedResponse = await cache.match(file.url);
+            // if (cachedResponse) {
+            //     const dateHeader = cachedResponse.headers.get('date');
+            //     if (dateHeader) {
+            //         const cachedTime = new Date(dateHeader).getTime();
+            //         const currentTime = Date.now();
+            //         if (currentTime - cachedTime < CACHE_MAX_AGE) {
+            //             cachedUrls[file.name] = file.url;
+            //             continue; // Cache is still valid
+            //         }
+            //     }
+            // }
+            //
+            // // Fetch and cache the file
+            // const response = await fetch(file.url);
+            // if (response.ok) {
+            //     await cache.put(file.url, response);
                 cachedUrls[file.name] = file.url;
-            } else {
-                console.error(`Failed to fetch ${file.url}`);
-            }
+            // } else {
+            //     console.error(`Failed to fetch ${file.url}`);
+            // }
         }
 
         return cachedUrls;
