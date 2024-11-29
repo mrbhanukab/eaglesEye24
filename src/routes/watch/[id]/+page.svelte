@@ -37,7 +37,7 @@
 </svelte:head>
 
 {#if !isCacheComplete}
-  <Loading on:cacheComplete={handleCacheComplete} />
+  <Loading />
 {:else}
   <section class="youtube">
     <header class="header">

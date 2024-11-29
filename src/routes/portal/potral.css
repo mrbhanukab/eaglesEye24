@@ -1,425 +1,546 @@
-.container {
-    width: 100vw;
-    min-height: 100vh;
-    background: #2F2F2F !important;
-    display: flex;
-    flex-direction: row;
-    gap: 0.8vw;
-    justify-content: space-evenly;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-.aetos, .right {
-    flex: 1;
-    margin: 1.5vh 0;
+.portalContainer {
+	width: 100vw;
+	height: 100vh;
+	background: #2f2f2f !important;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
 }
 
-.component {
-    border-radius: 1rem;
-    background: #212121;
-    width: 100%;
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.40));
+.widget {
+	border-radius: 1rem;
+	background: #212121;
+	width: 100%;
+	filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.4));
 }
 
-.subComponent {
-    width: 98%;
-    border-radius: 1rem;
-    flex: 1;
-    background: #444;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 1.5vh;
+.potralComponent {
+	margin: 1vh;
 }
 
-.aetosMindAndXploratus{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 1.5vh;
-    height: 100%;
+.portalAetos {
+	flex: 4;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 1vw;
+	gap: 1vh;
 }
 
+.portalAetos #head {
+	color: #fff;
+	font-family: Lexend, serif;
+	font-size: 2.8rem;
+	font-style: normal;
+	font-weight: 700;
+	flex: 3;
+}
+
+/*latestLecture*/
+.portalAetos .latestLecture{
+	flex: 20;
+	border-radius: 1rem;
+	display: flex;
+}
+
+.portalAetos .latestLecture .lectureInfo {
+	color: white;
+	border-radius: 1rem;
+	background: rgba(33, 33, 33, 0.64);
+	width: 75% !important;
+	height: 55% !important;
+	display: flex;
+	flex-direction: row;
+	align-self: end;
+	margin: 1.5%;
+	padding: 0 1.2vw;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.portalAetos .latestLecture .lectureInfo .info {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.portalAetos .latestLecture .lectureInfo .info h1 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical !important;
+	-webkit-line-clamp: 2 !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: Lexend, serif;
+	font-size: 3rem;
+	font-style: normal;
+	font-weight: 700;
+}
+
+.portalAetos .latestLecture .lectureInfo .info h6{
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: Comfortaa;
+	font-size: 1.5rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 2;
+}
+
+.portalAetos .latestLecture .lectureInfo .info h6 span {
+	font-weight: 700;
+}
+
+.portalAetos .latestLecture .lectureInfo .dateOrLink {
+	flex: 1;
+	margin: 2%;
+	height: 85%;
+	background: rgba(255, 255, 255, 0.75);
+	color: black !important;
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	text-align: center;
+}
+
+.portalAetos .latestLecture .lectureInfo .dateOrLink h1 {
+	font-family: Lexend, serif;
+	font-size: 4.6rem;
+	font-style: normal;
+	font-weight: 900;
+}
+
+.portalAetos .latestLecture .lectureInfo .dateOrLink h6 {
+	font-family: Comfortaa;
+	font-size: 1rem;
+	font-weight: 200;
+}
+
+.portalAetos .latestLecture .lectureInfo .dateOrLink a {
+	text-decoration: none;
+	color: black;
+}
+
+/*lecture Table*/
+.portalAetos .lectureTable{
+	flex: 19;
+	height: 100%;
+	color: white;
+	font-family: Comfortaa, serif;
+	overflow-y: auto;
+	margin: 1% 0;
+}
+
+.portalAetos .lectureTable h2{
+	font-size: 2rem;
+	font-weight: 700;
+	margin-bottom: 1vh;
+}
+
+.portalAetos .lectureTable table{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.portalAetos .lectureTable table tbody tr td {
+	padding: 0.8%;
+}
+
+.portalAetos .lectureTable table tbody tr {
+	border-bottom: 0.3vh solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 10%;
+}
+
+.portalAetos .lectureTable table tbody tr:hover {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.portalAetos .lectureTable table tbody tr .lectureTitle {
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+.portalAetos .lectureTable table tbody tr .lectureLecturer {
+	font-size: 1rem;
+	font-weight: 300;
+}
+
+.portalAetos .lectureTable table tbody tr .lectureLecturer span {
+	font-weight: 700;
+	font-size: 1.5rem;
+	text-transform: capitalize;
+}
+
+.portalAetos .lectureTable table tbody tr .lectureDate {
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+.portalAetos .lectureTable table tbody tr .lectureDate a {
+	color: #b6d1ff;
+}
+
+.potralRight {
+	flex: 3;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1.5vh;
+}
+
+/* Aetos Mind And Xploratus */
+.potralRight .aetosMindAndXploratus {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	height: 100%;
+	padding: 1%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent {
+	width: 100%;
+	margin: 1%;
+	border-radius: 1rem;
+	flex: 1;
+	background: #444;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent h1 {
+	writing-mode: sideways-lr;
+	text-orientation: sideways-right;
+	color: #fff;
+	font-family: Lexend, serif;
+	font-size: 200%;
+	font-style: normal;
+	font-weight: 700;
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent .content {
+	border-radius: 1rem;
+	background: #212121;
+	height: 95%;
+	display: flex;
+	flex-direction: row;
+	flex: 9;
+	padding: 2%;
+	margin: 1%;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent .content .teamInfo {
+	flex: 2;
+	color: #fff;
+	font-family: Comfortaa, serif;
+	display: flex;
+	flex-direction: column;
+	align-content: space-between;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent .content .teamInfo h2 {
+	margin: 0.5rem 0;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 1.5rem;
+	font-style: normal;
+	font-weight: 700;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent .content .teamInfo ol {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	justify-content: center;
+	flex: 2;
+	color: #fff;
+	font-family: Comfortaa, serif;
+	font-weight: normal;
+	font-size: 0.9rem;
+	width: 85%;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent .content .teamInfo ol li{
+	list-style-type: disc !important;
+}
+
+.potralRight .aetosMindAndXploratus .subComponent .content .eventInfo {
+	flex: 1;
+	background: white;
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+/*header*/
 .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    gap: 1vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	gap: 1vw;
 }
 
-.eventLogo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    color: white;
-    padding: 0.2rem;
+.header .eventLogo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	color: white;
+	padding: 0.2rem;
 }
 
-.eventLogo h1 {
-    text-shadow: 0 0 50px #000;
-    font-family: Lexend, sans-serif;
-    font-size: 0.9vw;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+.header .eventLogo h1 {
+	text-shadow: 0 0 50px #000;
+	font-family: Lexend, sans-serif;
+	font-size: 0.9vw;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
 }
 
-.collaboration {
-    display: flex;
-    align-items: center;
-    margin-left: 0.5rem;
+.header .eventLogo .collaboration {
+	display: flex;
+	align-items: center;
+	margin-left: 0.5rem;
 }
 
-.collaboration h2 {
-    color: white;
-    font-family: Comfortaa, sans-serif;
-    font-size: 0.3vw;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 150%;
-    text-transform: capitalize;
+.header .eventLogo .collaboration h2 {
+	color: white;
+	font-family: Comfortaa, sans-serif;
+	font-size: 0.3vw;
+	font-style: normal;
+	font-weight: 300;
+	line-height: 150%;
+	text-transform: capitalize;
 }
 
-.collaboration h2 span {
-    font-size: 0.5vw;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 10px;
+.header .eventLogo .collaboration h2 span {
+	font-size: 0.5vw;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 10px;
 }
 
-.collaboration img {
-    width: auto;
-    height: 1.8vw;
-    margin-left: 0.3rem;
-    flex-shrink: 0;
+.header .eventLogo .collaboration img {
+	width: auto;
+	height: 1.8vw;
+	margin-left: 0.3rem;
+	flex-shrink: 0;
 }
 
-.icacLogo {
-    max-width: 3.5vw !important;
-    height: auto !important;
-    object-fit: contain;
+.header .eventLogo .collaboration .icacLogo {
+	max-width: 3.5vw !important;
+	height: auto !important;
+	object-fit: contain;
 }
 
-.user{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
+.header .user {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
 }
 
-.userInfo{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #FFF;
-    font-family: Comfortaa, serif;
-    font-style: normal;
+.header .userInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+justify-content: center;
+	color: #fff;
+	font-family: Comfortaa, serif;
+	font-style: normal;
+	height: 100%;
 }
 
-.userInfo h3{
-    font-size: 0.9vw;
-    font-weight: 700;
-    line-height: 0;
-    text-transform: capitalize;
-    text-overflow: ellipsis !important;
+.header .userInfo h3 {
+	font-size: 0.9vw;
+	font-weight: 700;
+	text-transform: capitalize;
+	text-overflow: ellipsis !important;
 }
 
-.userInfo p{
-    font-size: 0.8vw;
-    font-weight: 300;
-    line-height: 0;
-    text-overflow: ellipsis;
+.header .userInfo p {
+	font-size: 0.8vw;
+	font-weight: 300;
+	text-overflow: ellipsis;
 }
 
-.subComponent h1{
-    writing-mode: sideways-lr;
-    text-orientation: sideways-right;
-    color: #FFF;
-    font-family: Lexend, serif;
-    font-size: 200%;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 0;
-}
+@media (max-width: 780px), (max-height: 700px) {
+	.portalContainer {
+		height: auto !important;
+		min-height: 100vh;
+		flex-direction: column;
+	}
 
-.subComponent .content{
-    border-radius: 1rem;
-    background: #212121;
-    width: 100%;
-    height: 95%;
-    margin-right: 1.5%;
-    display: flex;
-    flex-direction: row;
-}
+	.potralComponent {
+		margin: 1vw 0;
+		width: 100% !important;
 
-.content .teamInfo{
-    flex: 2;
-    color: #FFF;
-    font-family: Comfortaa, serif;
-}
+	}
 
-.content .eventInfo{
-    flex: 1;
-    background: white;
-    margin: 3%;
-    border-radius: 1rem;
-}
+	.portalAetos {
+		flex: 4;
+		padding: 3vw;
+	}
 
-.teamInfo{
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    height: 100%;
-}
+	.portalAetos #head {
+		font-size: 1.7rem;
+		flex: 3;
+	}
 
-.teamInfo h2{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 1.5vw;
-    font-style: normal;
-    font-weight: 700;
-    margin-left: 2vw;
-}
+	/*latestLecture*/
+	.portalAetos .latestLecture{
+		min-height: 40vh !important;
+	}
 
-.teamInfo ol{
-    flex: 2;
-    color: #FFF;
-    font-family: Comfortaa, serif;
-    font-weight: normal;
-    font-size: 100%;
-    overflow: auto;
-}
+	.portalAetos .latestLecture .lectureInfo {
+		width: 85% !important;
+	}
 
-.aetos{
-    display: flex;
-    flex-direction: column;
-    padding: 1vw;
-    /*min-height: 100vh;*/
-}
+	.portalAetos .latestLecture .lectureInfo .info h1 {
+		font-size: 1.8rem;
+	}
 
-.aetos #head{
-    color: #FFF;
-    font-family: Lexend, serif;
-    font-size: 200%;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 0;
-}
-.latestLecture{
-    border-radius: 1rem;
-    flex: 2 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex;
-}
+	.portalAetos .latestLecture .lectureInfo .info h6{
+		font-size: 0.8rem;
+	}
 
-.dateOrLink{
-    flex: 1 !important;
-}
+	.portalAetos .latestLecture .lectureInfo .dateOrLink h1 {
+		font-size: 3rem;
+	}
 
-.lectureInfo{
-    color: white;
-    border-radius: 1rem;
-    background: rgba(33, 33, 33, 0.64);
-    width: 70% !important;
-    height: 50% !important;
-    display: flex;
-    flex-direction: row;
-    align-self: end;
-    margin: 1.5vw;
-    padding: 0 1.2vw;
-    justify-content: space-between;
-}
+	.portalAetos .latestLecture .lectureInfo .dateOrLink h6 {
+		font-size: 0.8rem;
+	}
 
-.lectureInfo .info{
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+	/*lecture Table*/
+	.portalAetos .lectureTable{
+		height: 100%;
+		margin: 1% 0;
+	}
 
-.lectureInfo .info h1,
-.lectureInfo .info h6,
-.lectureInfo .dateOrLink h1,
-.lectureInfo .dateOrLink h6{
-    width: 92% !important;
-    margin: 0;
-    padding: 0;
-}
+	.portalAetos .lectureTable h2{
+		font-size: 1.2rem;
+		margin: 1vh 0;
+	}
 
-.lectureInfo .info h1{
-    display: -webkit-box;
-    -webkit-box-orient: vertical !important;
-    -webkit-line-clamp: 2 !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: Lexend;
-    font-size: 2.2vw;
-    font-style: normal;
-    font-weight: 700;
-}
+	.portalAetos .lectureTable table tbody tr td {
+		padding: 0.8%;
+	}
 
-.lectureInfo .info h6{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: Comfortaa;
-    font-size: 1.3vw;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 2;
-}
+	.portalAetos .lectureTable table tbody tr {
+		border-bottom: 0.4vh solid rgba(255, 255, 255, 0.1) !important;
+	}
 
-.lectureInfo .info h6 span{
-    font-weight: 700;
-}
+	.portalAetos .lectureTable table tbody tr:active {
+		background: rgba(255, 255, 255, 0.05);
+	}
 
-.lectureInfo .dateOrLink{
-    flex: 1;
-    margin: 2%;
-    background: white;
-    color: black!important;
-    border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center !important;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-}
+	.portalAetos .lectureTable table tbody tr .lectureTitle {
+		font-size: 0.8rem;
+	}
 
-.lectureInfo .dateOrLink h1{
-    font-family: Lexend;
-    font-size: 5vw;
-    font-style: normal;
-    font-weight: 900;
-}
+	.portalAetos .lectureTable table tbody tr .lectureLecturer {
+		font-size: 0.5rem;
+	}
 
-.lectureInfo .dateOrLink h6{
-    font-family: Comfortaa;
-    font-size: 1.5vw;
-    font-weight: 200;
+	.portalAetos .lectureTable table tbody tr .lectureLecturer span {
+		font-size: 0.7rem;
+	}
 
-}
+	.portalAetos .lectureTable table tbody tr .lectureDate {
+		font-size: 0.8rem;
+	}
 
-.lectureTable{
-    width: 100%;
-    flex: 1 !important;
-    color: white;
-    font-family: Comfortaa;
-    line-height: normal;
-    font-style: normal;
-}
+	.potralRight {
+		flex: 3;
+	}
 
-.lectureTable h2{
-    font-size: 2.2vw;
-    font-weight: 700;
-}
+	/* Aetos Mind And Xploratus */
+	.potralRight .aetosMindAndXploratus .subComponent {
+		flex: 1;
+	}
 
-.lectureTable table{
-    width: 100%;
-    border-collapse: collapse;
+	.potralRight .aetosMindAndXploratus .subComponent h1 {
+		font-size: 1.5rem;
+	}
 
-    /*background: aqua;*/
-}
+	.potralRight .aetosMindAndXploratus .subComponent .content .teamInfo h2 {
+		font-size: 1rem;
+	}
 
-.lectureTable table tbody tr td{
-    padding: 1%;
-}
+	.potralRight .aetosMindAndXploratus .subComponent .content .teamInfo ol {
+		font-size: 0.8rem;
+	}
 
-.lectureTable table tbody tr{
-    border-bottom: 0.3vh solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 10%;
-}
+	/*header*/
+	.header {
+		flex-direction: column;
+		gap: 2vw;
+	}
 
-.lectureTitle{
-    font-size: 1.5vw;
-    font-weight: 300;
-}
+	.header .eventLogo {
+		justify-content: center;
+		padding: 0.8rem;
+	}
 
-.lectureLecturer{
-    font-size: 1.2vw;
-    font-weight: 300;
-}
+	.header .eventLogo h1 {
+		font-size: 3vw;
+	}
 
-.lectureLecturer span{
-    font-weight: 700;
-    font-size: 1.3vw;
-    text-transform: capitalize;
-}
+	.header .eventLogo .collaboration {
+		margin-left: 0.3rem;
+	}
 
-.lectureDate{
-    font-size: 1.3vw;
-    font-weight: 500;
-}
+	.header .eventLogo .collaboration h2 {
+		font-size: 0.8vw;
+		line-height: 200%;
+	}
 
-.lectureDate a{
-    color: #b6d1ff;
-}
+	.header .eventLogo .collaboration h2 span {
+		font-size: 1.2vw;
+		line-height: 0px;
+	}
 
-.dateOrLink a{
-    text-decoration: none;
-    color: black;
-}
-@media (max-width: 785px), (max-height: 480px) {
-    .container {
-        flex-direction: column !important;
-        gap: 0.8vw;
-        justify-content: space-evenly;
-    }
-    .right {
-        flex-direction: column;
-        justify-content: space-evenly;
-    }
-    .aetosMindAndXploratus{
-        padding: 2vh;
-    }
-    .subComponent .content{
-        height: 100%;
-        margin: 2vh!important;
-    }
-    .subComponent h1{
-        font-size: 4vh;
-    }
-    .teamInfo ol{
-        font-size: 1.9vh;
-    }
-    .teamInfo h2{
-        font-size: 2.1vh;
-    }
-    .eventLogo h1 {
-        font-size: 2.5vw;
-    }
-    .collaboration h2 {
-        font-size: 1.5vw;
-    }
-    .collaboration h2 span {
-        font-size: 2vw;
-    }
-    .collaboration img {
-        height: 5vw;
-    }
-    .userInfo h3 {
-        font-size: 2.5vw;
-    }
-    .userInfo p {
-        font-size: 2vw;
-    }
-    .header {
-        flex-direction: column-reverse;
-        justify-content: space-evenly;
-        gap: 2vh;
-    }
+	.header .eventLogo .collaboration img {
+		height: 3.5vw;
+	}
 
+	.header .eventLogo .collaboration .icacLogo {
+		max-width: 6vw !important;
+	}
+
+	.header .userInfo{
+		padding: 0.8rem;
+	}
+
+	.header .userInfo h3 {
+		font-size: 2vw;
+	}
+
+	.header .userInfo p {
+		font-size: 1.5vw;
+	}
 }
