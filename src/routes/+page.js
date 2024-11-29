@@ -3,9 +3,6 @@ import { goto } from '$app/navigation';
 
 export const ssr = false;
 
-export async function load({ params, fetch }) {
-	const currentUser = await user.getUser();
+export async function load() {
 	if (await user.getCurrentSession() != null) await goto('/portal');
-	if (currentUser == null) await goto('/');
-	if (!currentUser.status) await goto('/');
 }
