@@ -2,41 +2,31 @@
   import './watch.css';
   import Loading from '$lib/UI/loading.svelte';
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { user } from '$lib/AppWrite/user.js';
 
-  export let data;
-  let logos = null;
-  let currentUser = null;
-  let isCacheComplete = false;
-  let cachedUrls = {};
+	const { data } = $props();
+	let logos = $state(null);
+	let loading = $state(true);
 
-  async function fetchData() {
-    currentUser = await user.getUser();
-    if (currentUser == null) await goto('/');
-    if (!currentUser.status) await goto('/');
-  }
-
-  function handleCacheComplete(event) {
-    isCacheComplete = true;
-    cachedUrls = event.detail.cachedUrls;
-    fetch(cachedUrls['logos.json'])
-      .then(response => response.json())
-      .then(data => {
-        logos = data;
-      });
-  }
+	async function fetchLogos() {
+		try {
+			const logosResponse = await fetch('/logos.json');
+			logos = await logosResponse.json();
+		} catch (error) {
+			console.error('Error downloading logos.json:', error);
+		}
+	}
 
   onMount(() => {
-    fetchData();
+		fetchLogos();
+		setTimeout(() => (loading = false), 1500);
   });
 </script>
 
 <svelte:head>
-  <title>EaglesEye24 | Watch</title>
+  <title>EaglesEye24 | 📺 {data.title}</title>
 </svelte:head>
 
-{#if !isCacheComplete}
+{#if loading}
   <Loading />
 {:else}
   <section class="youtube">
@@ -46,15 +36,16 @@
 				<span class="collaboration">
             <h2>collaboration with<br /> <span>Sri Lanka Air Force</span></h2>
             <img src={`data:image/png;base64, ${logos?.airForce}`} alt="air force logo" draggable="false" />
-            <img class="icacLogo" src={`data:image/png;base64, ${logos?.icac}`} alt="ICAC logo" draggable="false" />
+            <img class="icacLogoInWatch" src={`data:image/png;base64, ${logos?.icac}`} alt="ICAC logo" draggable="false" />
           </span>
 			</div>
     </header>
-    <div class="youtuubeContainer">
+    <div class="youtubeContainer">
       <div class="youtube-video-container">
         <iframe
+					title="Video Feed"
           src="https://www.youtube.com/embed/{data.id}"
-          frameborder="0"
+          style="border: none"
           allow="autoplay; encrypted-media; picture-in-picture"
           allowfullscreen
         ></iframe>
@@ -65,8 +56,9 @@
       </div>
       <div class="youtube-liveChat-container">
         <iframe
+					title="Live Chat"
           src="https://www.youtube.com/live_chat?v={data.id}&amp;embed_domain=eagles-eye24.vercel.app"
-          frameborder="0"
+					style="border: none"
         ></iframe>
       </div>
     </div>
