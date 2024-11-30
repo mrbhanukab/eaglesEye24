@@ -116,7 +116,7 @@
 						<tbody>
 							{#each data.aetosPath.archived as lecture}
 								<tr>
-									<td class="lectureTitle">{lecture.Title}</td>
+									<td class="lectureTitle">Archived {lecture.Title}</td>
 									<td class="lectureLecturer">by <span>{lecture.lecture}</span></td>
 									<td class="lectureDate"
 										><a href="/watch/{lecture.youtube}">Watched Recording</a></td
@@ -125,25 +125,11 @@
 							{/each}
 							{#each data.aetosPath.upcoming as lecture}
 								<tr>
-									<td class="lectureTitle">{lecture.Title}</td>
+									<td class="lectureTitle">Upcoming {lecture.Title}</td>
 									<td class="lectureLecturer">by <span>{lecture.lecture}</span></td>
 									<td class="lectureDate"
 										>{@html formatDateTime(lecture.start, lecture.end, lecture.youtube)}</td
 									>
-								</tr>
-							{/each}
-							{#each data.aetosPath.notFixed as lecture}
-								<tr>
-									<td class="lectureTitle">{lecture.Title}</td>
-									<td class="lectureLecturer">by <span>{lecture.lecture}</span></td>
-									<td class="lectureDate">Not Fixed</td>
-								</tr>
-							{/each}
-							{#each data.aetosPath.notFixed as lecture}
-								<tr>
-									<td class="lectureTitle">{lecture.Title}</td>
-									<td class="lectureLecturer">by <span>{lecture.lecture}</span></td>
-									<td class="lectureDate">Not Fixed</td>
 								</tr>
 							{/each}
 							{#each data.aetosPath.notFixed as lecture}
