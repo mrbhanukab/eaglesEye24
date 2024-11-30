@@ -8,20 +8,23 @@
 	import Loading from '$lib/UI/loading.svelte';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
+	import Error from '$lib/UI/error.svelte';
 
 	let loading = $state(true);
 	let showOTP = $state(false);
-  let image = $state("https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e4100376276f370/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85");
+	let image = $state('https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e4100376276f370/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85');
 	let OTPInputs = [];
 	let otp = ['', '', '', '', '', ''];
 	let userInputs;
 	let session = $state(null);
+	let errs = $state([]);
+	let verifying = $state(false);
 
 	async function downloadImage() {
 		try {
 			const response = await fetch(image);
 
-			if (!response.ok) error('404', `Image Not Found! [${image}]`);
+			if (!response.ok) error(404, `Image Not Found! [${image}]`);
 
 			const blob = await response.blob();
 
@@ -53,29 +56,50 @@
 		setTimeout(() => loading = false, 1500);
 	});
 
-	$effect(() => {
-		console.log('showOTP:', showOTP);
-		OTPInputs = Array.from(document.querySelectorAll('.otp input'))
-	});
+	$effect(() => OTPInputs = Array.from(document.querySelectorAll('.otp input')));
+
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.target);
 		userInputs = Object.fromEntries(data.entries());
+		verifying = true;
 
 		if (showOTP) {
 			try {
 				await user.login(session.userId, otp.join(''));
 				await goto('/portal');
 			} catch (error) {
-				alert(error.message);
+				if (error.code === 401) {
+					errs.push('Invalid OTP. Please try again.');
+				} else {
+					errs.push(error.message);
+				}
+				errs = [];
 			}
 		}
 
 		if (!showOTP) {
-			session = await user.createOtp(userInputs.Email);
-			showOTP = true;
+			const response = await fetch('/user/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({ Email: userInputs.Email })
+			});
+			if (!response.ok) {
+				errs.push('Failed to send OTP. Please try again later.');
+			} else {
+				const json = await response.json();
+				errs = json.errors || [];
+			}
+			console.log('errs:', errs.length);
+			if (errs.length === 0){
+				session = await user.createOtp(userInputs.Email)
+				showOTP = true;
+			}
 		}
+		verifying = false;
 	};
 
 </script>
@@ -87,6 +111,7 @@
 {#if loading}
 	<Loading />
 {:else}
+	<Error error={errs} />
 	<MainLayout imgSrc={image}>
 		{#snippet aboveImage()}
 			<div class="newUserPageAboveImage">
@@ -98,7 +123,7 @@
 			</div>
 		{/snippet}
 		{#snippet right()}
-			<form class="newUserPageRight" style="justify-content: center !important; gap: 2vh"  onsubmit={handleSubmit}>
+			<form class="newUserPageRight" style="justify-content: center !important; gap: 2vh" onsubmit={handleSubmit}>
 				<ButterflyInput name={!showOTP ? "Email" : "Enter the OTP You Received"} type="email" disabled={showOTP} />
 				{#if showOTP}
 					<div class="otp">
@@ -107,6 +132,7 @@
 								type="number"
 								maxlength="1"
 								style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
+								disabled={verifying}
 								onkeyup={(event) => handleKeyUp(event, i)}
 							/>
 						{/each}
@@ -115,10 +141,14 @@
 						The email you received must be from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b>
 						team and contain the phrase <b
 						style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase}.'</b> Can't find it?
-						Check your Junk/Spam folder—it might have taken a detour!
+						Check your Junk/Spam folder—it might have taken a detour! This OTP will expire in 15 minutes.
 					</h3>
 				{/if}
-				<TheBigButton title={!showOTP ? "Send Me the OTP" : "Log Me In"} type="submit" />
+				<TheBigButton
+					title={verifying ? "Verifying ..." : !showOTP ? "Send Me the OTP" : "Log Me In"}
+					type="submit"
+					disabled={verifying}
+				/>
 			</form>
 		{/snippet}
 	</MainLayout>

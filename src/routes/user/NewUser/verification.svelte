@@ -5,12 +5,16 @@
  import { onMount } from 'svelte';
  import { user } from '$lib/AppWrite/user.js';
  import { goto } from '$app/navigation';
+ import Error from '$lib/UI/error.svelte';
 
  let { data, imgSrc } = $props();
  let session = $state({});
  let OTPInputs = [];
  let otp = ['', '', '', '', '', ''];
  let otpSent = false;
+ let verifying = $state(false);
+ let errors = $state([]);
+
 
  onMount(() => {
   if (!otpSent) {
@@ -23,7 +27,7 @@
   try {
    session = await user.createOtp(data.Email);
   } catch (error) {
-   alert(`Error sending OTP: ${error.message}`);
+   errors.push(error.message);
   }
  }
 
@@ -48,15 +52,23 @@
 
  const handleSubmit = async (event) => {
   event.preventDefault();
+  errors = [];
+  verifying = true;
   try {
    await user.createUser(data, session, otp.join(''));
    await goto('/portal');
   } catch (error) {
-   alert(error.message);
+   if (error.code === 401) {
+    errors.push('Invalid OTP. Please try again.');
+   } else {
+    errors.push(error.message);
+   }
+   verifying = false;
   }
  }
 </script>
 
+<Error error={errors} />
 <MainLayout {imgSrc}>
  {#snippet aboveImage()}
   <div class="newUserPageAboveImage">
@@ -76,13 +88,14 @@
       maxlength="1"
       style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
       onkeyup={(event) => handleKeyUp(event, i)}
+      disabled={verifying}
      />
     {/each}
    </div>
    <h3 class="aboutOTP">
-    The email you received must be from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b> team and contain the phrase <b style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase || 'loading'}'</b>. Can't find it? Check your Junk/Spam folder—it might have taken a detour!
+    The email you received must be from the <b style="font-weight: bolder; text-decoration: underline">EaglesEye24</b> team and contain the phrase <b style="font-weight: bolder; text-decoration: underline; color: red">'{session.phrase || 'loading'}'</b>. Can't find it? Check your Junk/Spam folder—it might have taken a detour! This OTP will expire in 15 minutes.
    </h3>
-   <TheBigButton title="Verify & Take Off!" type="submit" />
+   <TheBigButton title={verifying ? "Verifying Your Account ..." : "Verify & Take Off!"} type="submit" />
   </form>
  {/snippet}
 </MainLayout>

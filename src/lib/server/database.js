@@ -27,6 +27,12 @@ export const participantsDB = {
 			ID.unique(),
 			data
 		);
+	},
+	
+	searchUsers: async (queries) => {
+		return databases.listDocuments(parsedDatabases.participants.DB, parsedDatabases.participants.accounts, [
+			...queries.map(([contains, query]) => Query.contains(contains, query))
+		]);
 	}
 };
 
