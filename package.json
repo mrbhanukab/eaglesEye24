@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@sveltejs/adapter-vercel": "^5.4.7",
+    "@vercel/speed-insights": "^1.1.0",
     "appwrite": "^14.0.1",
     "colorthief": "^2.6.0",
     "node-appwrite": "^14.1.0"
