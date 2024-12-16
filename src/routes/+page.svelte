@@ -13,19 +13,19 @@
       name: 'Aetos Path',
       subTopic: 'The Lecture Series',
       description: 'Embark on a unique learning journey with the Aetos Path Lecture Series, brought to you in collaboration with the Sri Lanka Air Force!',
-      image: 'https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e26002163de97f3/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85',
+      image: '/aetos-path.webp',
     }],
     ['event2', {
       name: 'Aetos Mind',
       subTopic: 'The Quiz Competition',
       description: 'Join the Aetos Mind Quiz Competition and test your knowledge against the best!',
-      image: 'https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e1400024238213f/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85',
+      image: '/aetos-mind.webp',
     }],
     ['event3', {
       name: 'Xploratus',
       subTopic: 'The Exhibition',
       description: 'Explore the wonders of science and technology at the Xploratus Exhibition!',
-      image: 'https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e58000c5d70ccc5/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85',
+      image: '/xploratus.webp',
     }]
   ]));
 

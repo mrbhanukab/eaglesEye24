@@ -12,7 +12,7 @@
 
 	let loading = $state(true);
 	let showOTP = $state(false);
-	let image = $state('https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e4100376276f370/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85');
+	let image = $state('/verify.webp');
 	let OTPInputs = [];
 	let otp = ['', '', '', '', '', ''];
 	let userInputs;

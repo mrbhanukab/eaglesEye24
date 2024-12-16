@@ -9,9 +9,8 @@
 
 	const { data } = $props();
 	let loading = $state(true);
-	let logos = $state(null);
 	let image = $state(
-		'https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/67433e26002163de97f3/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85'
+		'/aetos-path.webp'
 	);
 	let now = $state(new Date());
 
@@ -29,14 +28,8 @@
 		}
 	}
 
-	async function fetchData() {
-		const response = await fetch('/logos.json');
-		logos = await response.json();
-	}
-
 	onMount(() => {
 		downloadImage();
-		fetchData();
 		setTimeout(() => (loading = false), 1500);
 	});
 
@@ -159,13 +152,13 @@
 					<span class="collaboration">
 						<h2>collaboration with<br /> <span>Sri Lanka Air Force</span></h2>
 						<img
-							src={`data:image/png;base64, ${logos?.airForce}`}
+							src="/logos/aireforce.webp"
 							alt="air force logo"
 							draggable="false"
 						/>
 						<img
 							class="icacLogo"
-							src={`data:image/png;base64, ${logos?.icac}`}
+							src="/logos/icac.webp"
 							alt="ICAC logo"
 							draggable="false"
 						/>

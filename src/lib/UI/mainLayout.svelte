@@ -7,11 +7,6 @@
   let logos = $state(null);
   let backgroundColor = $state('#0000');
 
-  async function fetchData() {
-    const response = await fetch('/logos.json');
-    logos = await response.json();
-  }
-
   function updateBackgroundColor() {
     if (typeof window !== 'undefined') {
       const img = new Image();
@@ -31,10 +26,6 @@
     }
   }
 
-  onMount(() => {
-    fetchData();
-  });
-
   $effect(() => updateBackgroundColor());
 </script>
 
@@ -46,10 +37,10 @@
           <h1>Eagles Eye '24 |</h1>
           <span class="collaboration">
             <h2>collaboration with<br /> <span>Sri Lanka Air Force</span></h2>
-            <img src={`data:image/png;base64, ${logos?.airForce}`} alt="air force logo" draggable="false" />
+            <img src="/logos/aireforce.webp" alt="air force logo" draggable="false" />
           </span>
         </div>
-        <img class="icacLogo" src={`data:image/png;base64, ${logos?.icac}`} alt="ICAC logo" draggable="false" />
+        <img class="icacLogo" src="/logos/icac.webp" alt="ICAC logo" draggable="false" />
       </header>
       <div class="content">
         {@render props.aboveImage()}

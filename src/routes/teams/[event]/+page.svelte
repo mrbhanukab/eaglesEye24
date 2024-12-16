@@ -76,7 +76,7 @@
 </svelte:head>
 <Error error={errs} />
 <MainLayout
-	imgSrc="https://cloud.appwrite.io/v1/storage/buckets/6740230a002ce99c0cd2/files/6748377500382604535e/download?project=673ee3e0000c8c3eef85&project=673ee3e0000c8c3eef85"
+	imgSrc="/team.webp"
 >
 	{#snippet aboveImage()}
 		<div class="newTeamPageAboveImage">
