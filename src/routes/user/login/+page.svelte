@@ -53,11 +53,14 @@
 
 	onMount(async () => {
 		await downloadImage();
-		setTimeout(() => loading = false, 1500);
+		setTimeout(() => {
+			loading = false;
+		}, 1500);
 	});
 
-	$effect(() => OTPInputs = Array.from(document.querySelectorAll('.otp input')));
-
+	$effect(() => {
+		if (showOTP) OTPInputs = Array.from(document.querySelectorAll('.otp input'));
+	});
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -93,15 +96,13 @@
 				const json = await response.json();
 				errs = json.errors || [];
 			}
-			console.log('errs:', errs.length);
-			if (errs.length === 0){
-				session = await user.createOtp(userInputs.Email)
+			if (errs.length === 0) {
+				session = await user.createOtp(userInputs.Email);
 				showOTP = true;
 			}
 		}
 		verifying = false;
 	};
-
 </script>
 
 <svelte:head>
@@ -127,13 +128,15 @@
 				<ButterflyInput name={!showOTP ? "Email" : "Enter the OTP You Received"} type="email" disabled={showOTP} />
 				{#if showOTP}
 					<div class="otp">
+
 						{#each Array(6) as _, i}
 							<ButterflyInput
-								type="number"
-								maxlength="1"
+								type="text"
+								min="0"
+								max="9"
 								style="width: 3.5vw; height: 3.5vw; font-size: 2vw;"
-								disabled={verifying}
 								onkeyup={(event) => handleKeyUp(event, i)}
+								disabled={verifying}
 							/>
 						{/each}
 					</div>

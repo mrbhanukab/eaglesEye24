@@ -1,6 +1,7 @@
 import { databases } from '$lib/server/appwrite-server.js';
-import { Query, ID } from 'appwrite';
+import { ID, Query } from 'appwrite';
 import { DATABASES } from '$env/static/private';
+
 const parsedDatabases = JSON.parse(DATABASES);
 
 function toUTC(dateString) {
@@ -19,20 +20,44 @@ export const participantsDB = {
 	createTeam: async (data, event) => {
 		return databases.createDocument(
 			parsedDatabases.participants.DB,
-			event === 'Aetos Mind'
-				? parsedDatabases.participants.aetosMind
-				: event === 'Xploratus'
-					? parsedDatabases.participants.xploratus
-					: 'unkown',
+			parsedDatabases.participants[event],
 			ID.unique(),
 			data
 		);
 	},
-	
+
 	searchUsers: async (queries) => {
-		return databases.listDocuments(parsedDatabases.participants.DB, parsedDatabases.participants.accounts, [
-			...queries.map(([contains, query]) => Query.contains(contains, query))
-		]);
+		return databases.listDocuments(
+			parsedDatabases.participants.DB,
+			parsedDatabases.participants.accounts,
+			[...queries.map(([contains, query]) => Query.contains(contains, query))]
+		);
+	},
+
+	searchUserWithExactly: async (queries) => {
+		return databases.listDocuments(
+			parsedDatabases.participants.DB,
+			parsedDatabases.participants.accounts,
+			[...queries.map(([contains, query]) => Query.equal(contains, query))]
+		);
+	},
+
+	event: async (collectionID, documentID) => {
+		const event = await databases.getDocument(
+			parsedDatabases.participants.DB,
+			collectionID,
+			documentID
+		);
+
+		return {
+			team: event.team,
+			members: [
+				event.members.find((member) => member.$id === event.leader).Name,
+				...event.members
+					.filter((member) => member.$id !== event.leader)
+					.map((member) => member.Name)
+			]
+		};
 	}
 };
 

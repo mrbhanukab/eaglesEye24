@@ -31,7 +31,7 @@
 
   let eventIndex = $state(0);
   const eventKeys = Array.from(events.keys());
-  let currentEvent = $state(events.get(eventKeys[eventIndex]));
+  let currentEvent = $state(0);
 
   // Update currentEvent whenever eventIndex changes
   $effect(() => {
@@ -69,7 +69,7 @@
     }
   }
 
-  let mainColor = '#ffffff';
+  let mainColor = $state('#ffffff');
   leastUsedColor.subscribe(value => {
     if (value) {
       mainColor = `rgb(${value[0]}, ${value[1]}, ${value[2]})`;

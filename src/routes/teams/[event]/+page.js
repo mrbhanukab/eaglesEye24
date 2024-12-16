@@ -5,16 +5,19 @@ export const ssr = false;
 let session;
 
 export async function load({ params, fetch }) {
-	if (!(params.event == 'aetosMind' || params.event == 'xploratus')) error('400', 'Invalid Event');
+	if (!(params.event == 'aetosMind' || params.event == 'Xploratus')) error('400', 'Invalid Event');
 	session = await user.getCurrentSession();
 	console.log('Session ID:', session.$id);
-	const response = await fetch(`/teams/${params.event}?id=${session.$id}`);
+	let event = params.event;
+	if (event === 'Xploratus') event = 'xploratus';
+	const response = await fetch(`/teams/${event}?id=${session.$id}`);
 	const data = await response.json();
-	if (!data.allowed) error('403', `User Already Registered for Team '${user[params.event]}'`);
+	if (!data.allowed) error('403', `User Already Registered for a Team`);
 	return {
 		userName: data.name,
 		userId: session.$id,
 		event: params.event === 'aetosMind' ? 'Aetos Mind' : 'Xploratus',
+		school: data.school,
 		allowed: data.allowed
 	};
 }
