@@ -126,7 +126,7 @@
 							<td class="lectureTitle">{lecture.Title}</td>
 							<td class="lectureLecturer">by <span>{lecture.lecture}</span></td>
 							<td class="lectureDate"
-							>{formatDateTime(lecture.start, lecture.end, lecture.youtube)}</td
+							>{@html formatDateTime(lecture.start, lecture.end, lecture.youtube)}</td
 							>
 						</tr>
 					{/each}
