@@ -405,7 +405,7 @@
     text-overflow: ellipsis;
 }
 
-@media (max-width: 945px), (max-height: 570px) {
+@media (max-width: 945px), (max-height: 500px) {
     .portalContainer {
         padding: 1vh 2.5vw;
         height: auto !important;

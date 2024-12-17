@@ -39,11 +39,14 @@
 	};
 
 	function formatDateTime(dateTime, endDate, youtube) {
+		if (youtube === "postpone") return '<b style="color: yellow">Postponed!</b>';
 		if (!dateTime) {
 			return 'Not Fixed';
 		}
+
 		const start = new Date(dateTime);
 		const end = endDate ? new Date(endDate) : null;
+
 		if (start <= now && (!end || end >= now)) {
 			return `<a href="/watch/${youtube}" style="color: #ff6363">Watch Live 📺</a>`;
 		}
