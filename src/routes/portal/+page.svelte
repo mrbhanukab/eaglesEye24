@@ -91,7 +91,10 @@
 						</h6>
 					</div>
 					<div class="dateOrLink">
-						{#if data.response.aetosPath.upcoming[0] && new Date(data.response.aetosPath.upcoming[0].start) <= now && (!new Date(data.response.aetosPath.upcoming[0].end) || new Date(data.response.aetosPath.upcoming[0].end) >= now)}
+{#if data.response.aetosPath.upcoming[0].youtube === "postpone"}
+	<h1>⏰</h1>
+	<h6>Postponed</h6>
+						{:else if data.response.aetosPath.upcoming[0] && new Date(data.response.aetosPath.upcoming[0].start) <= now && (!new Date(data.response.aetosPath.upcoming[0].end) || new Date(data.response.aetosPath.upcoming[0].end) >= now)}
 							<a href="/watch/{data.response.aetosPath.upcoming[0].youtube}">
 								<h1>▶</h1>
 								<h6>Watch Live</h6>
