@@ -16,7 +16,8 @@ npx sv create my-app
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a
+development server:
 
 ```bash
 npm run dev
@@ -35,24 +36,31 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target
+> environment.
 
 # Changelog
+
 - Now on Browser will take care of caching
 
 Checking Stuff
+
 - +error.svelte | [✅|🖥️|📱]
 - +page.svelte | [✅|🖥️|📱]
-   - Add User Checking Before Page Load
-   - Add New Loading Method
+    - Add User Checking Before Page Load
+    - Add New Loading Method
 - mainLayout.svelte | [✅|🖥️|📱]
-   - statically host logos.json
+    - statically host logos.json
 - /user/login | [✅|🖥️|📱]
-  - Logged User can't Re-login | ✅
-  - Add New Loading Method
-  - Fix CSS and Now Mobile Responsive
+    - Logged User can't Re-login | ✅
+    - Add New Loading Method
+    - Fix CSS and Now Mobile Responsive
 - /user/NewUser
-  - Logged User can't Recreate account | ✅
-  - Add New Loading Method
-  - Fix CSS and Now Mobile Responsive
-  - Currently Here Still Use Client For Databse, will fix in next update
+    - Logged User can't Recreate account | ✅
+    - Add New Loading Method
+    - Fix CSS and Now Mobile Responsive
+    - Currently Here Still Use Client For Databse, will fix in next update
+
+- [x] Fix /watch Problem
+- [ ] Fix /postponed
+- [ ] Add User Count

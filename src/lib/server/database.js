@@ -62,6 +62,7 @@ export const participantsDB = {
 };
 
 export const webAppDB = {
+	db: '6743401c003bddaf96e6',
 	aetosPath: async () => {
 		const currentTime = new Date().toISOString();
 		const items = (
