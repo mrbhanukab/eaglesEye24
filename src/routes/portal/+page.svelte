@@ -39,7 +39,7 @@
 	};
 
 	function formatDateTime(dateTime, endDate, youtube) {
-		if (youtube === "postpone") return '<b style="color: yellow">Postponed!</b>';
+		if (youtube === 'postpone') return '<b style="color: yellow">Postponed!</b>';
 		if (!dateTime) {
 			return 'Not Fixed';
 		}
@@ -91,9 +91,9 @@
 						</h6>
 					</div>
 					<div class="dateOrLink">
-{#if data.response.aetosPath.upcoming[0].youtube === "postpone"}
-	<h1>⏰</h1>
-	<h6>Postponed</h6>
+						{#if data.response.aetosPath.upcoming[0].youtube === "postpone"}
+							<h1>⏰</h1>
+							<h6>Postponed</h6>
 						{:else if data.response.aetosPath.upcoming[0] && new Date(data.response.aetosPath.upcoming[0].start) <= now && (!new Date(data.response.aetosPath.upcoming[0].end) || new Date(data.response.aetosPath.upcoming[0].end) >= now)}
 							<a href="/watch/{data.response.aetosPath.upcoming[0].youtube}">
 								<h1>▶</h1>
@@ -149,8 +149,8 @@
 		</section>
 		<section class="potralComponent potralRight">
 			<div class="widget aetosMindAndXploratus">
-				{@render subComponentRegister('aetosMind', 'Aetos Mind', 3, 3, data.response.aetosMind)}
-				{@render subComponentRegister('Xploratus', 'Xploratus', 1, 10, data.response.xploratus)}
+				{@render subComponentRegister('aetosMind', 'Aetos Mind', 3, 3, data.response.aetosMind, false)}
+				{@render subComponentRegister('Xploratus', 'Xploratus', 1, 10, data.response.xploratus, true)}
 			</div>
 			<header class="header">
 				<div class="widget eventLogo">
@@ -196,65 +196,69 @@
 	</div>
 {/if}
 
-{#snippet subComponentRegister(className, title, min, max, event)}
-	<div class="subComponent {className}">
-		<h1>{title}</h1>
-		<div class="content">
-			<div class="teamInfo">
-				<h2>Registration Not Open!</h2>
-				<ul>
-					<li>Explore and learn from the Aetos Path resources.</li>
-					<li>Connect with potential members for your team.</li>
-					<li>Practice and sharpen your skills for the event.</li>
-					<li>Plan your strategy for success in {title}.</li>
-					<li>Register your team as soon as registration opens.</li>
-				</ul>
-			</div>
-			<div class="eventInfo">
-				<h2>⏳</h2>
+{#snippet subComponentRegister(className, title, min, max, event, open)}
+	{#if open}
+		<div class="subComponent {className}">
+			<h1>{title}</h1>
+			<div class="content">
+				<div class="teamInfo">
+					{#if (event === null)}
+						<h2>Registration Open! 👐🏼</h2>
+						<ul>
+							<li><b style="text-decoration: underline">Register your team now!</b> You become the team leader and are
+								responsible for your team.
+							</li>
+							<li>Teams must have {min}-{max} participants. Submit emails of all team members during registration.</li>
+							<li><b style="font-weight: bolder; color: red">Double-check emails</b> to ensure they belong only to your
+								team.
+							</li>
+							<li>Contact us <b style="font-weight: bolder; color: red; text-decoration: underline">immediately</b> for
+								corrections.
+							</li>
+						</ul>
+					{:else}
+						<h2 class="teamName">{event.team}</h2>
+						<ol>
+							{#each event.members as member, index}
+								<li
+									style={index===0 ? "font-size: 1.5rem; font-weight: bold;" : ""}>{index === 0 ? '👑 ' : index + "."} {member}</li>
+							{/each}
+						</ol>
+					{/if}
+				</div>
+				<div class="eventInfo">
+					{#if (event === null)}
+						<a href="/teams/{className}">
+							<img
+							src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADHUlEQVR4nO2bTWsUQRCGX8HkKEQQMV7EfCF48CPxoIiiXhQ1uXhWMSc9GHU1/gPvRvIfJAeDQYPubsQk/gA9uCZevRgVo8nJTRwpqIWl6HWnZ7s71cs8ULDDzHZVvzvdU109C+Tk5OSEoxfAbQBTACoAvgHYBLDCx1N8vg9txkUAZQB/ASQpjK6b4+9FTQ+A2ZSdbmSz3E50nAfws8XO1+w3gGFExA0e24lDo/auIQJGAGw47nzNqgAuQzH7+HZNPNq61jlhG4A3njtfsxL7U8WlQJ2v2QUoYzGwAG+hLMNLRCIzCuCKQxs1JFLkVwW3RGBFT36Kws9NKGFaBDbmyc8d4ecZlPBBBHbYk58jws97KGFFBLbLk5/dws9XKKEqAuv05KdT+PkDJayJwPZ48rNX+KGsUwWfRWCDnvwcE36WoITnIrC7nvwUhB96+qjgQaAsbTGQ0NYcMKzd6ZHlkkFDJtgPRbzznA3OifYXoIxThgXLmKexT3YGCnkpgtxwUMEZNlSYZqCUXgA/DCJQDp+Fe4bOfwewH4o5Z8gME57Bj1tMeGVDG1Wtt77kegMRaBaf5192CEA3p7fdfFzgyc20gUJp71VExEnDIimr0bA6iwjpAfCixc7PaB/zaTidoWa4wI/WtmKAxz/l8MsAVrmzq3w8zemtqgwvJydH7XwyzttkFd4zXOfPJT5H17RMskX2yDJLbGS0Sj0RmwBPDZufHQAmLV6zqTf6zhNuQ70AXwDsEDHsdLTzTDWFLu0CjBh+eVkMkWYT87xt2T6xdO6ayQwxNLt+IhYBhlKOeduYqc2jMQjQ7NbPKoBVzTLZIgFkpdm1AGQDmgV4GECA+5oFKAUQ4LVmAZY9+alv85NmAeSOsyvq21zTLIB84dIV9W3+0izAUgABKpoFKAaYBF9pFmA8gAAFzQL0BRCgX7MAsCh82MYcRSpMHEr5xwtJ2yyGwJUc1wI8RkR0pBgKEqcFEQ10WSyN/2flLCUxTXfCRMai6Cbf9tvRBhzkHePEYrZ3/cYaNEB5Aq3naUlLKS0tbMg+coZH55r+BfcfL/IwGAjC9rYAAAAASUVORK5CYII="
+							alt="add-user-male">
+						</a>
+					{:else}
+						<h2>✅</h2>
+						<h6>Registered!</h6>
+					{/if}
+				</div>
 			</div>
 		</div>
-	</div>
-<!--	<div class="subComponent {className}">-->
-<!--		<h1>{title}</h1>-->
-<!--		<div class="content">-->
-<!--			<div class="teamInfo">-->
-<!--				{#if (event === null)}-->
-<!--					<h2>Registration Open! 👐🏼</h2>-->
-<!--					<ul>-->
-<!--						<li>Team Leaders: <b style="text-decoration: underline">Register your team now!</b></li>-->
-<!--						<li>By registering, you become the team leader and are responsible for your team.</li>-->
-<!--						<li>Teams must have min '{min}' and max '{max}' participants.</li>-->
-<!--						<li>Collect and submit emails of all team members during registration.</li>-->
-<!--						<li><b style="font-weight: bolder; color: red">Double-check emails</b> to ensure they belong only to your-->
-<!--							team.-->
-<!--						</li>-->
-<!--						<li>Mistake? Contact us <b-->
-<!--							style="font-weight: bolder; color: red; text-decoration: underline">immediately</b>—corrections are-->
-<!--							manual.-->
-<!--						</li>-->
-<!--					</ul>-->
-<!--				{:else}-->
-<!--					<h2 class="teamName">{event.team}</h2>-->
-<!--					<ol>-->
-<!--						{#each event.members as member, index}-->
-<!--							<li style={index===0 ? "font-size: 1.5rem; font-weight: bold;" : ""}>{index === 0 ? '👑 ' : index + "."} {member}</li>-->
-<!--						{/each}-->
-<!--					</ol>-->
-<!--				{/if}-->
-<!--			</div>-->
-<!--			<div class="eventInfo">-->
-<!--				{#if (event === null)}-->
-<!--					<a href="/teams/{className}"><img-->
-<!--						src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADHUlEQVR4nO2bTWsUQRCGX8HkKEQQMV7EfCF48CPxoIiiXhQ1uXhWMSc9GHU1/gPvRvIfJAeDQYPubsQk/gA9uCZevRgVo8nJTRwpqIWl6HWnZ7s71cs8ULDDzHZVvzvdU109C+Tk5OSEoxfAbQBTACoAvgHYBLDCx1N8vg9txkUAZQB/ASQpjK6b4+9FTQ+A2ZSdbmSz3E50nAfws8XO1+w3gGFExA0e24lDo/auIQJGAGw47nzNqgAuQzH7+HZNPNq61jlhG4A3njtfsxL7U8WlQJ2v2QUoYzGwAG+hLMNLRCIzCuCKQxs1JFLkVwW3RGBFT36Kws9NKGFaBDbmyc8d4ecZlPBBBHbYk58jws97KGFFBLbLk5/dws9XKKEqAuv05KdT+PkDJayJwPZ48rNX+KGsUwWfRWCDnvwcE36WoITnIrC7nvwUhB96+qjgQaAsbTGQ0NYcMKzd6ZHlkkFDJtgPRbzznA3OifYXoIxThgXLmKexT3YGCnkpgtxwUMEZNlSYZqCUXgA/DCJQDp+Fe4bOfwewH4o5Z8gME57Bj1tMeGVDG1Wtt77kegMRaBaf5192CEA3p7fdfFzgyc20gUJp71VExEnDIimr0bA6iwjpAfCixc7PaB/zaTidoWa4wI/WtmKAxz/l8MsAVrmzq3w8zemtqgwvJydH7XwyzttkFd4zXOfPJT5H17RMskX2yDJLbGS0Sj0RmwBPDZufHQAmLV6zqTf6zhNuQ70AXwDsEDHsdLTzTDWFLu0CjBh+eVkMkWYT87xt2T6xdO6ayQwxNLt+IhYBhlKOeduYqc2jMQjQ7NbPKoBVzTLZIgFkpdm1AGQDmgV4GECA+5oFKAUQ4LVmAZY9+alv85NmAeSOsyvq21zTLIB84dIV9W3+0izAUgABKpoFKAaYBF9pFmA8gAAFzQL0BRCgX7MAsCh82MYcRSpMHEr5xwtJ2yyGwJUc1wI8RkR0pBgKEqcFEQ10WSyN/2flLCUxTXfCRMai6Cbf9tvRBhzkHePEYrZ3/cYaNEB5Aq3naUlLKS0tbMg+coZH55r+BfcfL/IwGAjC9rYAAAAASUVORK5CYII="-->
-<!--						alt="add-user-male">-->
-<!--					</a>-->
-<!--				{:else}-->
-<!--					<h2>&#45;&#45;</h2>-->
-<!--					<h6>Date Not Fixed</h6>-->
-<!--				{/if}-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
+		{:else }
+			<div class="subComponent {className}">
+				<h1>{title}</h1>
+				<div class="content">
+					<div class="teamInfo">
+						<h2>Registration Not Open!</h2>
+						<ul>
+							<li>Explore and learn from the Aetos Path resources.</li>
+							<li>Connect with potential members for your team.</li>
+							<li>Practice and sharpen your skills for the event.</li>
+							<li>Plan your strategy for success in {title}.</li>
+							<li>Register your team as soon as registration opens.</li>
+						</ul>
+					</div>
+					<div class="eventInfo">
+						<h2>⏳</h2>
+					</div>
+				</div>
+			</div>
+	{/if}
 {/snippet}
 
