@@ -5,7 +5,6 @@
 	import TheBigButton from '$lib/UI/theBigButton.svelte';
 	import { onMount } from 'svelte';
 	import { user } from '$lib/AppWrite/user.js';
-	import Loading from '$lib/UI/loading.svelte';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import Error from '$lib/UI/error.svelte';
@@ -53,9 +52,7 @@
 
 	onMount(async () => {
 		await downloadImage();
-		setTimeout(() => {
-			loading = false;
-		}, 1500);
+		loading = false;
 	});
 
 	$effect(() => {
@@ -109,9 +106,7 @@
 	<title>EaglesEye24 | Login</title>
 </svelte:head>
 
-{#if loading}
-	<Loading />
-{:else}
+{#if !loading}
 	<Error error={errs} />
 	<MainLayout imgSrc={image}>
 		{#snippet aboveImage()}

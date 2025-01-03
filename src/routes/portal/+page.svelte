@@ -2,7 +2,6 @@
 	import './potral.css';
 	import { onMount } from 'svelte';
 	import { WebApp } from '$lib/AppWrite/storage.js';
-	import Loading from '$lib/UI/loading.svelte';
 	import { error } from '@sveltejs/kit';
 	import { user } from '$lib/AppWrite/user';
 	import { goto } from '$app/navigation';
@@ -30,7 +29,7 @@
 
 	onMount(() => {
 		downloadImage();
-		setTimeout(() => (loading = false), 1500);
+		loading = false;
 	});
 
 	const logout = async () => {
@@ -39,7 +38,6 @@
 	};
 
 	function formatDateTime(dateTime, endDate, youtube) {
-		if (youtube === 'postpone') return '<b style="color: yellow">Postponed!</b>';
 		if (!dateTime) {
 			return 'Not Fixed';
 		}
@@ -48,6 +46,7 @@
 		const end = endDate ? new Date(endDate) : null;
 
 		if (start <= now && (!end || end >= now)) {
+			if (youtube === null) return '<b style="color: yellow">Postponed!</b>';
 			return `<a href="/watch/${youtube}" style="color: #ff6363">Watch Live 📺</a>`;
 		}
 		const options = { month: 'short', day: 'numeric' };
@@ -67,9 +66,7 @@
 	<title>EaglesEye24 | Portal</title>
 </svelte:head>
 
-{#if loading}
-	<Loading />
-{:else}
+{#if !loading}
 	<div class="portalContainer">
 		<section class="widget potralComponent portalAetos">
 			<h1 id="head">Aetos Path</h1>
@@ -91,14 +88,16 @@
 						</h6>
 					</div>
 					<div class="dateOrLink">
-						{#if data.response.aetosPath.upcoming[0].youtube === "postpone"}
-							<h1>⏰</h1>
-							<h6>Postponed</h6>
-						{:else if data.response.aetosPath.upcoming[0] && new Date(data.response.aetosPath.upcoming[0].start) <= now && (!new Date(data.response.aetosPath.upcoming[0].end) || new Date(data.response.aetosPath.upcoming[0].end) >= now)}
-							<a href="/watch/{data.response.aetosPath.upcoming[0].youtube}">
-								<h1>▶</h1>
-								<h6>Watch Live</h6>
-							</a>
+						{#if data.response.aetosPath.upcoming[0] && new Date(data.response.aetosPath.upcoming[0].start) <= now && (!new Date(data.response.aetosPath.upcoming[0].end) || new Date(data.response.aetosPath.upcoming[0].end) >= now)}
+							{#if data.response.aetosPath.upcoming[0].youtube === null}
+								<h1>⏰</h1>
+								<h6>Postponed</h6>
+							{:else}
+								<a href="/watch/{data.response.aetosPath.upcoming[0].youtube}">
+									<h1>▶</h1>
+									<h6>Watch Live</h6>
+								</a>
+							{/if}
 						{:else if data.response.aetosPath.upcoming[0]}
 							<h1>{new Date(data.response.aetosPath.upcoming[0].start).getDate() ?? '--'}</h1>
 							<h6>
@@ -123,7 +122,13 @@
 							<td class="lectureTitle">{lecture.Title}</td>
 							<td class="lectureLecturer">by <span>{lecture.lecture}</span></td>
 							<td class="lectureDate"
-							><a href="/watch/{lecture.youtube}">Watched Recording</a></td
+							>
+								{#if lecture.youtube === null}
+									<b style="color: yellow">Postponed</b>
+								{:else}
+									<a href="/watch/{lecture.youtube}">Watched Recording</a>
+								{/if}
+							</td
 							>
 						</tr>
 					{/each}
@@ -230,8 +235,8 @@
 					{#if (event === null)}
 						<a href="/teams/{className}">
 							<img
-							src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADHUlEQVR4nO2bTWsUQRCGX8HkKEQQMV7EfCF48CPxoIiiXhQ1uXhWMSc9GHU1/gPvRvIfJAeDQYPubsQk/gA9uCZevRgVo8nJTRwpqIWl6HWnZ7s71cs8ULDDzHZVvzvdU109C+Tk5OSEoxfAbQBTACoAvgHYBLDCx1N8vg9txkUAZQB/ASQpjK6b4+9FTQ+A2ZSdbmSz3E50nAfws8XO1+w3gGFExA0e24lDo/auIQJGAGw47nzNqgAuQzH7+HZNPNq61jlhG4A3njtfsxL7U8WlQJ2v2QUoYzGwAG+hLMNLRCIzCuCKQxs1JFLkVwW3RGBFT36Kws9NKGFaBDbmyc8d4ecZlPBBBHbYk58jws97KGFFBLbLk5/dws9XKKEqAuv05KdT+PkDJayJwPZ48rNX+KGsUwWfRWCDnvwcE36WoITnIrC7nvwUhB96+qjgQaAsbTGQ0NYcMKzd6ZHlkkFDJtgPRbzznA3OifYXoIxThgXLmKexT3YGCnkpgtxwUMEZNlSYZqCUXgA/DCJQDp+Fe4bOfwewH4o5Z8gME57Bj1tMeGVDG1Wtt77kegMRaBaf5192CEA3p7fdfFzgyc20gUJp71VExEnDIimr0bA6iwjpAfCixc7PaB/zaTidoWa4wI/WtmKAxz/l8MsAVrmzq3w8zemtqgwvJydH7XwyzttkFd4zXOfPJT5H17RMskX2yDJLbGS0Sj0RmwBPDZufHQAmLV6zqTf6zhNuQ70AXwDsEDHsdLTzTDWFLu0CjBh+eVkMkWYT87xt2T6xdO6ayQwxNLt+IhYBhlKOeduYqc2jMQjQ7NbPKoBVzTLZIgFkpdm1AGQDmgV4GECA+5oFKAUQ4LVmAZY9+alv85NmAeSOsyvq21zTLIB84dIV9W3+0izAUgABKpoFKAaYBF9pFmA8gAAFzQL0BRCgX7MAsCh82MYcRSpMHEr5xwtJ2yyGwJUc1wI8RkR0pBgKEqcFEQ10WSyN/2flLCUxTXfCRMai6Cbf9tvRBhzkHePEYrZ3/cYaNEB5Aq3naUlLKS0tbMg+coZH55r+BfcfL/IwGAjC9rYAAAAASUVORK5CYII="
-							alt="add-user-male">
+								src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADHUlEQVR4nO2bTWsUQRCGX8HkKEQQMV7EfCF48CPxoIiiXhQ1uXhWMSc9GHU1/gPvRvIfJAeDQYPubsQk/gA9uCZevRgVo8nJTRwpqIWl6HWnZ7s71cs8ULDDzHZVvzvdU109C+Tk5OSEoxfAbQBTACoAvgHYBLDCx1N8vg9txkUAZQB/ASQpjK6b4+9FTQ+A2ZSdbmSz3E50nAfws8XO1+w3gGFExA0e24lDo/auIQJGAGw47nzNqgAuQzH7+HZNPNq61jlhG4A3njtfsxL7U8WlQJ2v2QUoYzGwAG+hLMNLRCIzCuCKQxs1JFLkVwW3RGBFT36Kws9NKGFaBDbmyc8d4ecZlPBBBHbYk58jws97KGFFBLbLk5/dws9XKKEqAuv05KdT+PkDJayJwPZ48rNX+KGsUwWfRWCDnvwcE36WoITnIrC7nvwUhB96+qjgQaAsbTGQ0NYcMKzd6ZHlkkFDJtgPRbzznA3OifYXoIxThgXLmKexT3YGCnkpgtxwUMEZNlSYZqCUXgA/DCJQDp+Fe4bOfwewH4o5Z8gME57Bj1tMeGVDG1Wtt77kegMRaBaf5192CEA3p7fdfFzgyc20gUJp71VExEnDIimr0bA6iwjpAfCixc7PaB/zaTidoWa4wI/WtmKAxz/l8MsAVrmzq3w8zemtqgwvJydH7XwyzttkFd4zXOfPJT5H17RMskX2yDJLbGS0Sj0RmwBPDZufHQAmLV6zqTf6zhNuQ70AXwDsEDHsdLTzTDWFLu0CjBh+eVkMkWYT87xt2T6xdO6ayQwxNLt+IhYBhlKOeduYqc2jMQjQ7NbPKoBVzTLZIgFkpdm1AGQDmgV4GECA+5oFKAUQ4LVmAZY9+alv85NmAeSOsyvq21zTLIB84dIV9W3+0izAUgABKpoFKAaYBF9pFmA8gAAFzQL0BRCgX7MAsCh82MYcRSpMHEr5xwtJ2yyGwJUc1wI8RkR0pBgKEqcFEQ10WSyN/2flLCUxTXfCRMai6Cbf9tvRBhzkHePEYrZ3/cYaNEB5Aq3naUlLKS0tbMg+coZH55r+BfcfL/IwGAjC9rYAAAAASUVORK5CYII="
+								alt="add-user-male">
 						</a>
 					{:else}
 						<h2>✅</h2>
@@ -240,25 +245,25 @@
 				</div>
 			</div>
 		</div>
-		{:else }
-			<div class="subComponent {className}">
-				<h1>{title}</h1>
-				<div class="content">
-					<div class="teamInfo">
-						<h2>Registration Not Open!</h2>
-						<ul>
-							<li>Explore and learn from the Aetos Path resources.</li>
-							<li>Connect with potential members for your team.</li>
-							<li>Practice and sharpen your skills for the event.</li>
-							<li>Plan your strategy for success in {title}.</li>
-							<li>Register your team as soon as registration opens.</li>
-						</ul>
-					</div>
-					<div class="eventInfo">
-						<h2>⏳</h2>
-					</div>
+	{:else }
+		<div class="subComponent {className}">
+			<h1>{title}</h1>
+			<div class="content">
+				<div class="teamInfo">
+					<h2>Registration Not Open!</h2>
+					<ul>
+						<li>Explore and learn from the Aetos Path resources.</li>
+						<li>Connect with potential members for your team.</li>
+						<li>Practice and sharpen your skills for the event.</li>
+						<li>Plan your strategy for success in {title}.</li>
+						<li>Register your team as soon as registration opens.</li>
+					</ul>
+				</div>
+				<div class="eventInfo">
+					<h2>⏳</h2>
 				</div>
 			</div>
+		</div>
 	{/if}
 {/snippet}
 

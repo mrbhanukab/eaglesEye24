@@ -62,5 +62,13 @@ Checking Stuff
     - Currently Here Still Use Client For Databse, will fix in next update
 
 - [x] Fix /watch Problem
-- [ ] Fix /postponed
-- [ ] Add User Count
+- [x] Fix loading
+- [x] Fix postponed
+
+```sveltehtml
+<!--<body data-sveltekit-preload-data="hover" style="margin: 0; padding: 0; background-color: #f0f0f0; color: #333; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; font-family: 'Comfortaa', sans-serif;">-->
+<!--<h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Site Under Construction 🚧</h1>-->
+<!--<p style="font-size: 1.2rem; margin-bottom: 0.5rem;">We are currently working on some improvements. Please check back-->
+<!--	later.</p>-->
+<!--<p style="font-size: 1.2rem; margin-bottom: 0.5rem;">Thank you for your patience!</p>-->
+```

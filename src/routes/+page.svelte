@@ -4,7 +4,6 @@
   import { goto } from '$app/navigation';
   import MainLayout from '$lib/UI/mainLayout.svelte';
   import TheBigButton from '$lib/UI/theBigButton.svelte';
-  import Loading from '$lib/UI/loading.svelte';
   import { leastUsedColor } from '../stores/colors.svelte.js';
 
   let loading = $state(true);
@@ -59,7 +58,7 @@
       try {
         const response = await fetch(event.image);
         if (!response.ok) {
-          throw new Error(`Image Not Found! [${event.image}]`);
+          console.error(`Image Not Found! [${event.image}]`);
         }
         const blob = await response.blob();
         event.image = URL.createObjectURL(blob);
@@ -81,9 +80,7 @@
   <title>EaglesEye24 | Home</title>
 </svelte:head>
 
-{#if loading}
-  <Loading />
-{:else}
+{#if !loading}
   <MainLayout imgSrc={currentEvent.image} alt={currentEvent.name}>
     {#snippet aboveImage()}
       <div class="indexPageAboveImage">
