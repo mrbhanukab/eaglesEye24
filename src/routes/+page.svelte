@@ -1,110 +1,70 @@
 <script>
-  import './page.css';
-  import { onMount, onDestroy } from 'svelte';
-  import { goto } from '$app/navigation';
-  import MainLayout from '$lib/UI/mainLayout.svelte';
-  import TheBigButton from '$lib/UI/theBigButton.svelte';
-  import { leastUsedColor } from '../stores/colors.svelte.js';
+	import TextScramble from '$lib/UI/TextScramble.svelte';
+	import BigButton from '$lib/UI/BigButton.svelte';
+	import Lecture from '$lib/UI/Lecture.svelte';
+	import Footer from '$lib/UI/Footer.svelte';
 
-  let loading = $state(true);
-  let events = $state(new Map([
-    ['event1', {
-      name: 'Aetos Path',
-      subTopic: 'The Lecture Series',
-      description: 'Embark on a unique learning journey with the Aetos Path Lecture Series, brought to you in collaboration with the Sri Lanka Air Force!',
-      image: '/aetos-path.webp',
-    }],
-    ['event2', {
-      name: 'Aetos Mind',
-      subTopic: 'The Quiz Competition',
-      description: 'Join the Aetos Mind Quiz Competition and test your knowledge against the best!',
-      image: '/aetos-mind.webp',
-    }],
-    ['event3', {
-      name: 'Xploratus',
-      subTopic: 'The Exhibition',
-      description: 'Explore the wonders of science and technology at the Xploratus Exhibition!',
-      image: '/xploratus.webp',
-    }]
-  ]));
+	const { data } = $props();
 
-  let eventIndex = $state(0);
-  const eventKeys = Array.from(events.keys());
-  let currentEvent = $state(0);
+	let lectures = data.lectures;
 
-  // Update currentEvent whenever eventIndex changes
-  $effect(() => {
-    currentEvent = events.get(eventKeys[eventIndex]);
-  });
-
-  // Cycle through events every 5 seconds
-  let interval;
-  onMount(() => {
-    downloadImage();
-
-    interval = setInterval(() => {
-      eventIndex = (eventIndex + 1) % eventKeys.length; // Cycle to the next event
-    }, 5000); // Change every 5 seconds
-
-    setTimeout(() => loading = false, 1500);
-  });
-
-  onDestroy(() => {
-    clearInterval(interval); // Clean up the interval
-  });
-
-  async function downloadImage() {
-    for (const [key, event] of events.entries()) {
-      try {
-        const response = await fetch(event.image);
-        if (!response.ok) {
-          console.error(`Image Not Found! [${event.image}]`);
-        }
-        const blob = await response.blob();
-        event.image = URL.createObjectURL(blob);
-      } catch (error) {
-        console.error('Error downloading image:', error);
-      }
-    }
-  }
-
-  let mainColor = $state('#ffffff');
-  leastUsedColor.subscribe(value => {
-    if (value) {
-      mainColor = `rgb(${value[0]}, ${value[1]}, ${value[2]})`;
-    }
-  });
 </script>
 
 <svelte:head>
-  <title>EaglesEye24 | Home</title>
+	<title>EaglesEye24</title>
+	<style>
+      #main {
+          opacity: 1;
+          background-image: linear-gradient(#161616 1px, transparent 1px), linear-gradient(to right, #161616 1px, #000000 1px);
+          background-size: 80px 80px;
+
+          #event-title {
+              text-shadow: -2px 2px 0 #de3d3d,
+              2px -2px 0 #00b1a0,
+              0 0 9px #267368;
+          }
+      }
+
+      #aetos-path {
+          opacity: 1;
+          background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #000000 30px), repeating-linear-gradient(#16161655, #161616);
+          -webkit-box-shadow: 0 0 116px -10px rgba(255, 255, 255, 0.35);
+          -moz-box-shadow: 0 0 116px -10px rgba(255, 255, 255, 0.35);
+          box-shadow: 0 0 116px -10px rgba(255, 255, 255, 0.35);
+      }
+	</style>
 </svelte:head>
 
-{#if !loading}
-  <MainLayout imgSrc={currentEvent.image} alt={currentEvent.name}>
-    {#snippet aboveImage()}
-      <div class="indexPageAboveImage">
-        <h1>{currentEvent.name}</h1>
-        <h4>{currentEvent.subTopic}</h4>
-        <p>{currentEvent.description}</p>
-        <div class="eventIndicator">
-          {#each eventKeys as key, index}
-            <span style="--main-color: {index === eventIndex ? mainColor : ''}"></span>
-          {/each}
-        </div>
-      </div>
-    {/snippet}
+<main class="w-screen min-h-screen flex flex-col justify-center items-center text-white text-center px-10 py-16"
+			id="main">
+	<h1 class="font-orbitron font-extrabold text-4xl sm:text-5xl" id="event-title">
+		Eagles Eye '24 <br />
+	</h1>
 
-    {#snippet right()}
-      <div class="indexPageRight">
-        <div>
-          <h2>It is Time to begin!</h2>
-          <h1>Create Your Account <br />& secure your spot</h1>
-        </div>
-        <p>First, create an account on the platform to gain access to the entire lecture series, including both live sessions and recorded content. After registering, you will need to create a team within the portal in order to participate in events like Aetos Mind or Xploratus. Only one member of the team can create the group, and that person will be the team leader. It’s important to enter accurate details, especially your phone number and email address, as these will be used for authentication. Also, ensure that both the email and phone number you provide are unique to your account, as duplicate information may cause issues during registration.</p>
-        <TheBigButton title="Create Your Account" onclick={() => goto('/user/NewUser')} />
-        <a href="/user/login">Login With Your Email</a>
-      </div>
-    {/snippet}
-  </MainLayout>
-{/if}
+	<TextScramble />
+
+	<div class="mt-8 flex flex-wrap justify-center gap-4">
+		<BigButton href="/aetos-mind" title="Aetos Mind" />
+		<BigButton href="/#aetos-path" title="Aetos Path" />
+	</div>
+</main>
+
+<section class="w-[95vw] px-4 py-8 my-8 sm:py-12 rounded-3xl" id="aetos-path">
+	<header>
+		<h2 class="text-2xl font-bold font-orbitron text-white sm:text-3xl underline underline-offset-4">Aetos Path</h2>
+
+		<p class="mt-4 max-w-md text-gray-300">
+			Embark on a unique learning journey with the Aetos Path Lecture Series, brought to you in collaboration with the
+			Sri Lanka Air Force!
+		</p>
+	</header>
+
+	<div class="mt-8 flex flex-wrap gap-4 justify-evenly">
+		{#each lectures as lecture}
+			<Lecture title={lecture.title} by={lecture.by} img={lecture.image} youtube={lecture.youtube}
+							 start={lecture.start} />
+		{/each}
+	</div>
+</section>
+
+<Footer />

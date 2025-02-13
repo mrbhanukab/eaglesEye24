@@ -1,45 +1,57 @@
 import { account } from './appwrite';
 import { ID } from 'appwrite';
-import {participantsDB} from '$lib/AppWrite/database.js';
 
 export const user = {
- createOtp: async (email) => {
-  return await account.createEmailToken(ID.unique(), email, true);
- },
+	createOtp: async (email) => {
+		return await account.createEmailToken(ID.unique(), email, true);
+	},
 
- createUser: async (data, session, otp) => {
-  await account.createSession(session.userId, otp);
-  await account.updateName(data.Name);
-  await account.updatePhone(data.Whatsapp, '11111111');
-  await participantsDB.newUser(session.userId, data);
- },
+	createUser: async (data, session, otp, url) => {
+		const errors = [];
+		await account.updateName(data.name);
+		await account.updatePhone(data.whatsapp, '11111111');
 
- getCurrentSession: async () => {
-  try {
-   const session = await account.get();
-   return session;
-  } catch (error) {
-   console.error('Error fetching session:', error);
-   return null;
-  }
- },
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+					// 'Access-Control-Allow-Origin': '*'
+				},
+				body: JSON.stringify({
+					userId: session.userId,
+					data: data
+				})
+			});
 
- getUser: async () => {
-  return await account.get();
- },
+			if (!response.ok) {
+				const errorText = await response.text();
+				errors.push('Failed to create user:', errorText);
+			}
+		} catch (error) {
+			errors.push('Error during POST request:', error);
+		}
+		return errors;
+	},
 
- login: async (userId, secret) => {
-  return  await account.createSession(userId, secret);
- },
+	getCurrentSession: async () => {
+		try {
+			return await account.get();
+		} catch (error) {
+			console.error('Error fetching session:', error);
+			return null;
+		}
+	},
 
- logout: async () => {
-  await account.deleteSession('current');
- },
+	getUser: async () => {
+		return await account.get();
+	},
 
- // updateUserDetails: async (userId, gender, school) => {
- //  return await databases.createDocument(userDatabaseId, userCollectionId, userId, {
- //   gender: gender,
- //   school: school,
- //  });
- // }
+	login: async (userId, secret) => {
+		return await account.createSession(userId, secret);
+	},
+
+	logout: async () => {
+		await account.deleteSession('current');
+	}
 };

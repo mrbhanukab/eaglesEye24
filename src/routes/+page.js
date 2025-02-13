@@ -1,8 +1,10 @@
-import { user } from '$lib/AppWrite/user.js';
-import { goto } from '$app/navigation';
-
 export const ssr = false;
 
 export async function load() {
-	if (await user.getCurrentSession() != null) await goto('/portal');
+	const response = await fetch(`/`);
+	if (!response.ok) {
+		throw new Error('Network response was not ok');
+	}
+	const lectures = await response.json();
+	return { lectures };
 }
