@@ -69,9 +69,9 @@
 				<Input disabled lable="School" name="school" value={userData["School-University"]} />
 				<Input lable="Team Name" name="team" pattern="[A-Ca-c]" placeholder="A or B or C" required={true} />
 			</div>
-			<Input disabled lable="Leader" name="school" value="{userData.Name} ({userData['$id']})" />
-			{#each Array(2) as _, i}
-				<Input lable="Member {i + 1}" name="member{i + 1}" placeholder="Member {i + 1}'s ID" type="text"
+			<Input disabled lable="Leader (Member 1)" name="school" value="{userData.Name} ({userData['$id']})" />
+			{#each Array(4) as _, i}
+				<Input lable="Member {i + 2}" name="member{i + 2}" placeholder="Member {i + 2}'s ID" type="text"
 							 required={true} />
 			{/each}
 			<button
