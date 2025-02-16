@@ -1,4 +1,5 @@
 import { participantsDB, webAppDB } from '$lib/server/database.js';
+import { AppwriteException } from 'node-appwrite';
 
 export async function GET({ url }) {
 	const errors = [];
@@ -44,7 +45,6 @@ export async function POST({ request }) {
 			Whatsapp: receivedData.data.whatsapp
 		};
 
-		let errors = [];
 		try {
 			if (receivedData.data.event === 'account') {
 				await participantsDB.newUser(receivedData.userId, mappedData);
@@ -61,25 +61,35 @@ export async function POST({ request }) {
 	}
 
 	if (event === 'team') {
-		let errors = [];
 		try {
 			const userId = receivedData.userId;
 			const user = await participantsDB.getAccount(userId);
 
 			if (!user) {
 				errors.push('User not found');
+				console.error('User not found');
 			} else {
 				const members = [];
-				for (let i = 1; receivedData[`member${i}`]; i++) {
+				for (let i = 2; receivedData[`member${i}`]; i++) {
 					const memberId = receivedData[`member${i}`];
-					const member = await participantsDB.getAccount(memberId);
-					console.log('Member ', i, ' :', member);
-					if (!member) {
-						errors.push(`Member with ID '${memberId}' not found`);
-					} else if (member.aetosMind !== null) {
-						errors.push(`Member with ID '${memberId}' already belongs to a team`);
-					} else {
-						members.push(memberId);
+					try {
+						const member = await participantsDB.getAccount(memberId);
+						console.log('Member ', i, ' :', member);
+						if (!member) {
+							errors.push(`Member with ID '${memberId}' not found`);
+							console.error(`Member with ID '${memberId}' not found`);
+						} else if (member.aetosMind !== null) {
+							errors.push(`Member with ID '${memberId}' already belongs to a team`);
+						} else {
+							members.push(memberId);
+						}
+					} catch (err) {
+						if (err instanceof AppwriteException && err.code === 404) {
+							errors.push(`Member with ID '${memberId}' not found`);
+							console.error(`Member with ID '${memberId}' not found`);
+						} else {
+							throw err;
+						}
 					}
 				}
 
@@ -89,7 +99,9 @@ export async function POST({ request }) {
 						leader: userId,
 						members: [userId, ...members]
 					};
+					console.info('Creating team:', teamData);
 					const databaseResponse = await participantsDB.createTeam(teamData, event);
+					console.info('Database response:', databaseResponse);
 					return new Response(JSON.stringify({ success: true }), {
 						headers: { 'Content-Type': 'application/json' }
 					});
@@ -100,8 +112,11 @@ export async function POST({ request }) {
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} catch (err) {
+			errors.push(err.message);
 			console.error('Error processing form data:', err);
-			throw error(500, 'Internal Server Error');
+			return new Response(JSON.stringify({ success: false, errors }), {
+				headers: { 'Content-Type': 'application/json' }
+			});
 		}
 	}
 }

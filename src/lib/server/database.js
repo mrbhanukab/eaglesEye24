@@ -1,5 +1,5 @@
 import { databases } from '$lib/server/appwrite-server.js';
-import { ID, Permission, Query, Role } from 'appwrite';
+import { AppwriteException, ID, Permission, Query, Role } from 'appwrite';
 import { DATABASES } from '$env/static/private';
 
 const parsedDatabases = JSON.parse(DATABASES);
@@ -10,11 +10,18 @@ function toUTC(dateString) {
 
 export const participantsDB = {
 	getAccount: async (id) => {
-		return databases.getDocument(
-			parsedDatabases.participants.DB,
-			parsedDatabases.participants.accounts,
-			id
-		);
+		try {
+			return await databases.getDocument(
+				parsedDatabases.participants.DB,
+				parsedDatabases.participants.accounts,
+				id
+			);
+		} catch (err) {
+			if (err instanceof AppwriteException && err.code === 404) {
+				throw new Error(`User with ID '${id}' not found`);
+			}
+			throw err;
+		}
 	},
 
 	createTeam: async (data) => {
