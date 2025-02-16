@@ -59,10 +59,10 @@ export const participantsDB = {
 		);
 	},
 
-	event: async (collectionID, documentID) => {
+	aetosMind: async (documentID) => {
 		const event = await databases.getDocument(
 			parsedDatabases.participants.DB,
-			collectionID,
+			parsedDatabases.participants.aetosMind,
 			documentID
 		);
 

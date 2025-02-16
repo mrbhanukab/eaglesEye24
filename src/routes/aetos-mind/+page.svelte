@@ -93,7 +93,7 @@
 {#if session != null}
 	{#if otherData.aetosmind[0].value}
 		<iframe
-			src="https://docs.google.com/forms/d/e/1FAIpQLScpt2NMrJWaIScspy_HHB8rKMKBkwZjKdmqVVJuIE4UZXQ1Og/viewform?usp=pp_url&entry.1428200108={otherData.account.aetosMind['$id']}-InZlcmlmaWVkIg==&entry.228476575={otherData.account['School-University']}&entry.194400790={otherData.account.aetosMind.team}"
+			src="https://docs.google.com/forms/d/e/1FAIpQLScpt2NMrJWaIScspy_HHB8rKMKBkwZjKdmqVVJuIE4UZXQ1Og/viewform?usp=pp_url&entry.194400790={otherData.account.aetosMind.team}&entry.1428200108={otherData.account.aetosMind['$id']}-InZlcmlmaWVkIg==&entry.1285790397={otherData.account.aetosMind.leader}&entry.1261356965={otherData.account['$id']}"
 			title="Aetos Mind" allowfullscreen loading="eager" class="w-screen h-screen z-50"
 			referrerpolicy="unsafe-url"></iframe>
 
