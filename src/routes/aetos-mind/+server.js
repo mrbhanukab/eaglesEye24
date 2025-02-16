@@ -92,7 +92,7 @@ export async function POST({ request }) {
 
 				if (errors.length === 0) {
 					const teamData = {
-						team: `${receivedData.school} ${receivedData.team}`,
+						team: `${receivedData.school.replace(/\b\w/g, (char) => char.toUpperCase())} - Team ${receivedData.team.toUpperCase()}`,
 						leader: userId,
 						members: [userId, ...members]
 					};
