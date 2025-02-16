@@ -1,6 +1,7 @@
 <script>
 	import Input from '$lib/UI/Input.svelte';
 	import Error from '$lib/UI/Error.svelte';
+	import Copy from '$lib/UI/Copy.svelte';
 
 	let { userData } = $props();
 	let errors = $state([]);
@@ -63,7 +64,10 @@
 
 <section class="min-h-screen w-screen flex flex-col justify-center" id="image">
 	<div class="px-8 py-6 bg-black/60 rounded-lg shadow-lg mx-[5vw] my-[5vh] sm:mx-[15vw]">
-		<h2 class="text-2xl font-semibold text-white mb-4">Create Your Aetos Mind Team</h2>
+		<div class="flex flex-row flex-wrap w-full justify-between">
+			<h2 class="text-2xl font-semibold text-white mb-4">Create Your Aetos Mind Team</h2>
+			<Copy data={userData['$id']} title="Your ID" />
+		</div>
 		<form class="flex flex-col justify-evenly gap-2" onsubmit={handleSubmit}>
 			<div class="flex sm:flex-row flex-col gap-2 justify-between items-center">
 				<Input disabled lable="School" name="school" value={userData["School-University"]} />
