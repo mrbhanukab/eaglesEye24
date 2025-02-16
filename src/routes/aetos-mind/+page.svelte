@@ -1,6 +1,7 @@
 <script>
 	import { user } from '$lib/AppWrite/user.js';
 	import { goto } from '$app/navigation';
+	import Seo from '$lib/Seo.svelte';
 
 	const { data } = $props();
 	console.log('Data:', data);
@@ -86,7 +87,10 @@
 </script>
 
 <svelte:head>
-	<title>EaglesEye24 | Aetos Mind</title>
+	<Seo
+		description="Aetos Mind is an aviation-themed quiz competition under Eagles Eye 24, testing knowledge on aerospace and aviation. Organized by Isipathana College Aeronautical Club."
+		title="Aetos Mind"
+		url="/aetos-mind" />
 </svelte:head>
 
 

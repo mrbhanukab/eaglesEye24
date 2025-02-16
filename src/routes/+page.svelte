@@ -3,6 +3,7 @@
 	import BigButton from '$lib/UI/BigButton.svelte';
 	import Lecture from '$lib/UI/Lecture.svelte';
 	import Footer from '$lib/UI/Footer.svelte';
+	import Seo from '$lib/Seo.svelte';
 
 	const { data } = $props();
 
@@ -11,7 +12,10 @@
 </script>
 
 <svelte:head>
-	<title>EaglesEye24</title>
+	<Seo
+		description="Eagles Eye 24 is a series of aviation-related competitions, including Aetos Path (lecture series), Aetos Mind (quiz competition), and Xploratus (exhibition). Organized by Isipathana College Aeronautical Club & Sri Lanka Air Force."
+		title="Home"
+		url="/" />
 	<style>
       #main {
           opacity: 1;
