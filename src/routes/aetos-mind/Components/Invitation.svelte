@@ -66,6 +66,14 @@
 		<img alt="ICAC logo" class="pt-1 w-12 h-auto object-contain filter grayscale"
 				 draggable="false" src="/logos/icac.webp" />
 
+		<a
+			class="mt-4 bg-green-950 text-green-400 border border-green-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+			href="https://chat.whatsapp.com/IZnHWgxIiho0XwjbYWFiQS">
+			<span
+				class="bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
+			Join Whatsapp Group
+		</a>
+
 		<div class="cover flex flex-col justify-center items-center text-center">
 			<img alt="ICAC logo" class="w-20 h-auto object-contain filter grayscale"
 					 draggable="false" src="/logos/icac.webp" />
