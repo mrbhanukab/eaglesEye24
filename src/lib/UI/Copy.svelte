@@ -49,7 +49,7 @@
       .tooltip {
           position: absolute;
           opacity: 0;
-          visibility: 0;
+          visibility: hidden;
           top: 0;
           left: 50%;
           transform: translateX(-50%);
@@ -125,7 +125,7 @@
 	</style>
 </svelte:head>
 
-<button aria-label="copy" class="copy" on:click={copyToClipboard}>
+<button aria-label="copy" class="copy" onclick={copyToClipboard}>
 				   <span class="tooltip" data-text-end="Copied {props.title}!"
 								 data-text-initial="Copy {props.title} to clipboard"></span>
 	<span>

@@ -75,17 +75,14 @@ export async function POST({ request }) {
 					try {
 						const member = await participantsDB.getAccount(memberId);
 						console.log('Member ', i, ' :', member);
-						if (!member) {
-							errors.push(`Member with ID '${memberId}' not found`);
-							console.error(`Member with ID '${memberId}' not found`);
-						} else if (member.aetosMind !== null) {
+						if (member.aetosMind !== null) {
 							errors.push(`Member with ID '${memberId}' already belongs to a team`);
 						} else {
 							members.push(memberId);
 						}
 					} catch (err) {
 						if (err instanceof AppwriteException && err.code === 404) {
-							errors.push(`Member with ID '${memberId}' not found`);
+							errors.push(`Member ${i} with ID '${memberId}' not found`);
 							console.error(`Member with ID '${memberId}' not found`);
 						} else {
 							throw err;
