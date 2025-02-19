@@ -54,15 +54,29 @@
 <section class="min-h-screen w-screen flex flex-col justify-center items-center" id="image">
 
 	<div
-		class="book min-h-[60vh] rounded-2xl bg-white flex flex-col justify-center items-center text-center p-10 m-5">
-		<p class="text-xl sm:text-2xl font-semibold text-gray-500 font-serif">Hello,
-			<strong>{userData.aetosMind.team}</strong></p>
-		<p class="px-10 pt-5 text-[10px] sm:text-[12px] text-gray-700">
-			You are invited to the first round of <strong>Aetos Mind</strong>.<br />
-			📅 <b>20<sup>th</sup> of February</b> | ⏰ <b>20:00</b> <br />
-			The event will take place here when the time comes. Stay prepared!
+		class="book min-h-[60vh] max-w-[800px] rounded-2xl bg-white flex flex-col justify-center items-center text-center p-10 m-5">
+		<p class="text-xl sm:text-2xl font-semibold text-gray-500 font-serif">
+			Hello, <strong>{userData.Name}!</strong>
 		</p>
-		<p class="font-serif text-[10px] sm:text-[12px] text-gray-700">Good luck!</p>
+
+		<p class="px-2 sm:px-10 pt-5 text-[10px] sm:text-[12px] text-gray-700">
+			You have been selected to participate in the first round of <strong>Aetos Mind</strong>! 🎉 <br />
+		</p>
+
+		<p class="px-2 sm:px-10 pt-5 text-[10px] sm:text-[12px] text-gray-700 text-left">
+			📅 <b>20<sup>th</sup> of February</b> | ⏰ <b>20:00</b> <br />
+			🏫 <b>School:</b> {userData.aetosMind.school} <br />
+			🏆 <b>Team:</b> Team {userData.aetosMind.team.toUpperCase()} <br />
+		</p>
+
+		<p class="px-2 sm:px-10 pt-5 text-[10px] sm:text-[12px] text-gray-700">
+			Get ready for an exciting challenge!<br />The event will take place here at the scheduled time.
+		</p>
+		<br />
+		<p class="font-serif text-[10px] sm:text-[12px] text-gray-700">
+			Wishing you the best of luck! 🍀
+		</p>
+
 		<p class="font-sans text-[10px] text-gray-700 pt-5">Eagles Eye 24 Team</p>
 		<img alt="ICAC logo" class="pt-1 w-12 h-auto object-contain filter grayscale"
 				 draggable="false" src="/logos/icac.webp" />

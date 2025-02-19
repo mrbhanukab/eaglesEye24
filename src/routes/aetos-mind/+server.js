@@ -1,5 +1,4 @@
 import { participantsDB, webAppDB } from '$lib/server/database.js';
-import { AppwriteException } from 'node-appwrite';
 
 export async function GET({ url }) {
 	const errors = [];
@@ -61,51 +60,35 @@ export async function POST({ request }) {
 	}
 
 	if (event === 'team') {
+		console.log('Creating team [receivedData]:', receivedData);
+
 		try {
 			const userId = receivedData.userId;
 			const user = await participantsDB.getAccount(userId);
+			console.log('Creating team[user]:', user);
 
 			if (!user) {
 				errors.push('User not found');
-				console.error('User not found');
-			} else {
-				const members = [];
-				for (let i = 2; receivedData[`member${i}`]; i++) {
-					const memberId = receivedData[`member${i}`];
-					try {
-						const member = await participantsDB.getAccount(memberId);
-						console.log('Member ', i, ' :', member);
-						if (member.aetosMind !== null) {
-							errors.push(`Member with ID '${memberId}' already belongs to a team`);
-						} else {
-							members.push(memberId);
-						}
-					} catch (err) {
-						if (err instanceof AppwriteException && err.code === 404) {
-							errors.push(`Member ${i} with ID '${memberId}' not found`);
-							console.error(`Member with ID '${memberId}' not found`);
-						} else {
-							throw err;
-						}
-					}
-				}
-
-				if (errors.length === 0) {
-					const teamData = {
-						team: `${receivedData.school.replace(/\b\w/g, (char) => char.toUpperCase())} - Team ${receivedData.team.toUpperCase()}`,
-						leader: userId,
-						members: [userId, ...members]
-					};
-					console.info('Creating team:', teamData);
-					const databaseResponse = await participantsDB.createTeam(teamData, event);
-					console.info('Database response:', databaseResponse);
-					return new Response(JSON.stringify({ success: true }), {
-						headers: { 'Content-Type': 'application/json' }
-					});
-				}
+				return new Response(JSON.stringify({ success: false, errors }), {
+					headers: { 'Content-Type': 'application/json' }
+				});
 			}
 
-			return new Response(JSON.stringify({ success: false, errors }), {
+			const teamData = {
+				school: receivedData.school,
+				team: receivedData.team.toLowerCase(),
+				leader: userId,
+				members: [
+					user.Name,
+					...Object.keys(receivedData)
+						.filter((key) => key.startsWith('member'))
+						.map((key) => receivedData[key])
+				]
+			};
+			console.log('Creating team[teamData]:', teamData);
+			const databaseResponse = await participantsDB.createTeam(teamData);
+			console.log('Database response:', databaseResponse);
+			return new Response(JSON.stringify({ success: true }), {
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} catch (err) {

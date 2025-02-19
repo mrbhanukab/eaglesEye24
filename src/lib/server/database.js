@@ -25,6 +25,7 @@ export const participantsDB = {
 	},
 
 	createTeam: async (data) => {
+		console.info('Creating team [inisde databse]:', data);
 		return databases.createDocument(
 			parsedDatabases.participants.DB,
 			parsedDatabases.participants.aetosMind,

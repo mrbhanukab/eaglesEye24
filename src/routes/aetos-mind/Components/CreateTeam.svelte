@@ -1,7 +1,6 @@
 <script>
 	import Input from '$lib/UI/Input.svelte';
 	import Error from '$lib/UI/Error.svelte';
-	import Copy from '$lib/UI/Copy.svelte';
 
 	let { userData } = $props();
 	let errors = $state([]);
@@ -64,18 +63,15 @@
 
 <section class="min-h-screen w-screen flex flex-col justify-center" id="image">
 	<div class="px-8 py-6 bg-black/60 rounded-lg shadow-lg mx-[5vw] my-[5vh] sm:mx-[15vw]">
-		<div class="flex flex-row flex-wrap w-full justify-between">
-			<h2 class="text-2xl font-semibold text-white mb-4">Create Your Aetos Mind Team</h2>
-			<Copy data={userData['$id']} title="Your ID" />
-		</div>
+		<h2 class="text-2xl font-semibold text-white mb-4">Create Your Aetos Mind Team</h2>
 		<form class="flex flex-col justify-evenly gap-2" onsubmit={handleSubmit}>
 			<div class="flex sm:flex-row flex-col gap-2 justify-between items-center">
 				<Input disabled lable="School" name="school" value={userData["School-University"]} />
 				<Input lable="Team Name" name="team" pattern="[A-Ca-c]" placeholder="A or B or C" required={true} />
 			</div>
-			<Input disabled lable="Leader (Member 1)" name="school" value="{userData.Name} ({userData['$id']})" />
+			<Input disabled lable="Leader (Member 1)" name="school" value={userData.Name} />
 			{#each Array(4) as _, i}
-				<Input lable="Member {i + 2}" name="member{i + 2}" placeholder="Member {i + 2}'s ID" type="text"
+				<Input lable="Member {i + 2}" name="member{i + 2}" placeholder="Member {i + 2}'s Name" type="text"
 							 required={true} />
 			{/each}
 			<button
