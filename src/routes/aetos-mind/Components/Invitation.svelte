@@ -64,7 +64,7 @@
 		</p>
 
 		<p class="px-2 sm:px-10 pt-5 text-[10px] sm:text-[12px] text-gray-700 text-left">
-			📅 <b>20<sup>th</sup> of February</b> | ⏰ <b>20:00</b> <br />
+			📅 <b>28<sup>th</sup> of February</b> | ⏰ <b>20:00</b> <br />
 			🏫 <b>School:</b> {userData.aetosMind.school} <br />
 			🏆 <b>Team:</b> Team {userData.aetosMind.team.toUpperCase()} <br />
 		</p>
